@@ -1,0 +1,115 @@
+<!doctype html>
+{% load static %}
+
+<head>
+	<title>Spam</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/modal-video.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/logoico.png' %}">
+</head>
+
+<body>
+	<!-- Container -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="" class="logo"></a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'index' %}> 主页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add' %}"> 添加用户样例 </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'analysis' %}"> 实时邮件分析 <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </nav>
+        <!--End of nav bar-->
+        <!--End of header top-->
+        <div class="row" style="padding: 120px 0;">
+            <div class="col-lg-10">
+                <h3>实时邮件分析</h3>
+                <form action="{% url 'analysis' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <legend for="text_label">邮件正文</legend>
+                        <textarea class="form-control" id="textarea" rows="6" name="emailtext">{% if last_email_text %}{{ last_email_text }}{% endif %}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary"> 分析 </button>
+                    <button class="btn btn-outline-primary" id="btn-clear" type="button"> 清空 </button>
+                    <a class="btn btn-outline-primary" href="{% url 'index' %}"> 返回 </a>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                {% if result %}
+                    <h4> 本次分析给出的结果是：<span class="badge {{ result.style }}">{{ result.label }}</span></h4>
+                    <p><button name="change" class="btn btn-primary" id="btn-add"> 添加 </button> 该邮件为
+                        <span class="badge {{ result.style }}" style="font-size: 16px"> {{ result.label }} </span> ？</p>
+                {% endif %}
+            </div>
+        </div>
+        <!--End of row-->
+    <!--End of Container-->
+    </div>
+
+
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
+    <script>
+        $("#btn-clear").on('click', function() {
+            $("#textarea").val("");
+        });
+    </script>
+    <script>
+        $("#btn-add").on('click', function() {
+            var csrftoken = getCookie('csrftoken');
+            var label = '{{ result.value }}';
+            var content = $("#textarea").val();
+            $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            $.ajax({
+                url: 'addone',
+                type: 'POST',
+                data: {'label': label, 'content': content},
+                dataType: 'json',
+                success: function (arg) {
+                    // alert(arg.exist)
+                    if (parseInt(arg.ret) > 0) {
+                        alert("成功添加！");
+                    }
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

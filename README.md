@@ -15,3 +15,6 @@
 ### 3. [基于自然语言的新闻摘要处理](./NewsAbstractAnalysis)
 爬虫获取新闻摘要，对新闻摘要分词、提取关键词，利用 Apriori 算法挖掘频繁项集
 
+### 4. [Bayes 垃圾邮件分类](./BayesSpamWeb)
+使用 Bayes 分类器过滤垃圾邮件和正常邮件，支持 Web UI 进行操作
+
