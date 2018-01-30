@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DianZiBingLiNER:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DianZiBingLiNER_jar</output-path>
+    <root id="archive" name="DianZiBingLiNER.jar">
+      <element id="module-output" name="DianZiBingLiNER" />
+    </root>
+  </artifact>
+</component>
