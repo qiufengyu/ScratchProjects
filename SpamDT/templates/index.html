@@ -1,0 +1,119 @@
+<!doctype html>
+{% load static %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Google Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet"
+          type="text/css">
+    <title>Decision Tree - Spam</title>
+    <!-- icon -->
+    <link rel="icon" type="image/png" sizes="64x64" href="{% static 'img/favicon.png' %}">
+
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+    <header class="site-header">
+        <!-- Logo and title -->
+        <div class="branding">
+            <a href="{% url 'index' %}"><img class="avatar" src="{% static 'img/triangle.svg' %}" alt=""/></a>
+            <h1 class="site-title">
+                <a href="{% url 'index' %}" style="text-decoration: none"> 决策树实时邮件分析系统 </a>
+            </h1>
+        </div>
+        <!-- Toggle menu -->
+        <nav class="clear">
+            <a id="pull" class="toggle" href="#"> <i class="fa fa-bars fa-lg"></i> </a>
+            <!-- Menu -->
+            <ul>
+                <li>
+                    <a href="{% url 'index' %}"> 主页 </a>
+                </li>
+                <li>
+                    <a href="{% url 'analysis' %}"> 邮件样例分析 </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    </div>
+    <div class="row">
+        <div class="content home posts col-md-7">
+        <div class="post-teaser">
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="num-features"> 特征维数（建议小于 100）</label>
+                    <input type="text" class="form-control" id="num-features" name="name_num_features"
+                           placeholder="{% if last_num_features %} {{ last_num_feautres }} {% else %} 100 {% endif %}">
+                </div>
+                <div class="form-group">
+                    <label for="train-test-ratio"> 交叉验证比例 (0 至 1 之间的小数）</label>
+                    <input type="text" class="form-control" id="train-test-ratio" name="name_train_test_ratio"
+                    placeholder="{% if last_train_test_ratio %} {{ last_train_test_ratio }} {% else %} 0.8 {% endif %}">
+                </div>
+                <div class="form-group">
+                    <label for="max-depth"> 最大决策树深度 </label>
+                    <input type="text" class="form-control" id="max-depth" name="name_max_depth"
+                           placeholder="{% if last_max_depth %} {{ max_depth }} {% else %} 10 {% endif %}">
+                </div>
+                <div class="form-group">
+                    <label for="split-choose">选择决策树节点特征分裂的依据</label>
+                    <select id="split-choose" class="form-control" name="name_split_choose">
+                        <option value="0" {% if selected_0 %} selected {% endif %}> ID3 - 最大信息熵 </option>
+                        <option value="1" {% if selected_1 %} selected {% endif %}> ID3 - 最大信息增益 </option>
+                        <option value="2" {% if selected_2 %} selected {% endif %}> C4.5 - 最大增益比 </option>
+                    </select>
+                </div>
+                <p style="font-size: 16px" class="text-muted"> 训练时间与特征维数、最大决策树深度成正比，请根据实际情况耐心等待几分钟... </p>
+                <button type="submit" class="btn btn-primary"> 开始训练与测试 </button>
+            </form>
+        </div>
+    </div>
+    {% if acc %}
+        <div class="col-md-4">
+            <h3> 运行结果：</h3>
+                <h4>平均准确率：{{ acc }}%</h4>
+                <h4>Precision：{{ precision }}%</h4>
+                <h4>Recall：{{ recall }}%</h4>
+                <h4>F1：{{ f1 }}%</h4>
+        </div>
+    {% endif %}
+    </div>
+
+    <!-- 网站尾部 -->
+    <footer class="site-footer">
+        <p class="text">Powered by Someone</p>
+    </footer>
+</div>
+
+<!-- Javascript -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/fontawesome.js' %}"></script>
+<script>
+    /* 对输入框，点击后清空内容 */
+    $("#num-features").on('click', function () {
+        $(this).val('');
+        $(this).attr('placeholder', '');
+    });
+    $("#train-test-ratio").on('click', function () {
+        $(this).val('');
+        $(this).attr('placeholder', '');
+    });
+    $("#max-depth").on('click', function () {
+        $(this).val('');
+        $(this).attr('placeholder', '');
+    });
+</script>
+
+</body>
+</html>
