@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>微博情感分析</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+
+</head>
+<body>
+<nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+        <img src="{% static 'img/weibo-icon.png' %}"> <a id="logo-container" href="#" class="brand-logo"> &nbsp;微博情感分析展示与标注系统</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+            <h5> 微博情感分析 </h5>
+            {% if empty_content %}
+                <p class="red-text"> 没有数据，请开启或等待爬虫程序！</p>
+            {% else %}
+                <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                {% for weibo in weibos %}
+                    <label for="source">来源</label>
+                    <p> {{ weibo.wb_from }}</p>
+                    <label for="content">正文</label>
+                    <p><a href="{{ weibo.url }}" target="_blank"> {{ weibo.content }}</a></p>
+                    <label for="source">情感极性</label>
+                    {% if weibo.sentiment >= 0.5 %}
+                        <p>
+                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="positive" value="1"
+                                   checked="checked"/>
+                            <label for="positive"> 正向情感 </label>
+                        </p>
+                        <p>
+                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="negative" value="0"/>
+                            <label for="negative"> 负向情感 </label>
+                        </p>
+                    {% else %}
+                        <p>
+                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="positive" value="1"/>
+                            <label for="positive"> 正向情感 </label>
+                        </p>
+                        <p>
+                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="negative" value="0"
+                                   checked="checked"/>
+                            <label for="negative"> 负向情感 </label>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+                    <button class="btn waves-effect waves-light" type="submit" name="submit"> 提交
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <button class="btn waves-effect waves-light" name="refresh"> 更新
+                        <i class="material-icons right">update</i>
+                    </button>
+                    <p class="small red-text text-accent-2">注意：更新模型耗时较长，由于 SnowNLP 的默认设置，更新模型后需要手动替换生成的 sentiment.marshal.3 文件至 SnowNLP 库位置</p>
+                </form>
+
+                <div class="pagination">
+                    {% if weibos.has_previous %}
+                        <a class="waves-effect waves-light btn blue accent-2" href="?page={{ weibos.previous_page_number }}">
+                            <i class="material-icons left">chevron_left</i> 上一条</a>
+                    {% else %}
+                        <a class="waves-effect waves-light btn blue accent-2 disabled" href="#">
+                            <i class="material-icons left">chevron_left</i> 上一条</a>
+                    {% endif %}
+
+                    <span class="current">
+                        第 {{ weibos.number }} 条，共 {{ weibos.paginator.num_pages }} 条
+                    </span>
+
+                    {% if weibos.has_next %}
+                        <a class="waves-effect waves-light btn blue accent-2" href="?page={{ weibos.next_page_number }}">
+                            下一条 <i class="material-icons right">chevron_right</i></a>
+                    {% else %}
+                        <a class="waves-effect waves-light btn blue accent-2 disabled" href="#">
+                            下一条 <i class="material-icons right">chevron_right</i></a>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<footer class="page-footer fixed teal">
+    <div class="footer-copyright">
+        <div class="container">
+            Powered by Scrapy and Selenium, Django, SnowNLP <span><i class="material-icons footer-matierial-icons">all_inclusive</i></span>
+            Theme by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        </div>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="{% static 'js/materialize.js' %}"></script>
+<script src="{% static 'js/init.js' %}"></script>
+
+</body>
+</html>

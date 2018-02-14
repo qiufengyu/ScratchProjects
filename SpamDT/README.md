@@ -2,20 +2,20 @@
 
 ### 开发环境
 
-* Windows 1064 位系统 / macOS High Sierra 10.13.2
+* Windows 10 64 位系统 / macOS High Sierra 10.13.2
 
-* Python 3.6.4(64 位)，需要安装下列依赖库
+* Python 3.6.4 (64 位)，需要安装下列依赖库
 
   可以直接 `pip install xxx`，附上开发时用的版本
 
   *  jieba – 0.39 中文分词
-  * numpy – 1.14.0 数据操作
-  * django – 2.0.1 WebUI 的框架
-  * scipy -1.0.0 和 scikit-learn (sklean) –0.19.1 现有的决策树算法的库，主要用来对比的
-  * graphviz – 0.8.2 可视化 sklearn 生成的决策树，如果要导出为 pdf，Windows 系统需要安装 graphviz 的运行程序，macOS 则可以通过 brew install graphviz 安装
-  * matplotlib – 2.1.2 可视化自己实现的决策树
+  *  numpy – 1.14.0 数据操作
+  *  django – 2.0.1 WebUI 的框架
+  *  scipy - 1.0.0 和 scikit-learn (sklean) – 0.19.1 现有的决策树算法的库，主要用来对比的
+  *  graphviz – 0.8.2 可视化 sklearn 生成的决策树，如果要导出为 pdf，Windows 系统需要安装 graphviz 的运行程序，macOS 则可以通过 brew install graphviz 安装
+  *  matplotlib – 2.1.2 可视化自己实现的决策树
 
-* PyCharm2017.3.2，可直接创建 Django 项目，免去许多配置。也可以选择打开一个项目，选择这个工程文件夹即可。
+* PyCharm 2017.3.2，可直接创建 Django 项目，免去许多配置。也可以选择打开一个项目，选择这个工程文件夹即可。
 
 为保证正确运行，请尽量使用相同的开发环境。涉及到 python 的路径设置，请在 Pycharm 中调试时，选择正确的运行路径。
 
@@ -23,7 +23,7 @@
 
 ### 项目结构：（基于 Django 开发的Web界面）
 
-* data 文件夹，经过清洗过的 trec06c 中的数据，因为源数据中有的含有乱码，而且数量巨大，这里只保留了约6000 条有效数据。
+* data 文件夹，经过清洗过的 trec06c 中的数据，因为源数据中有的含有乱码，而且数量巨大，这里只保留了约 6000 条有效数据。
 * dt_spam，管理整个 Web 的前后端交互、请求、渲染等
 * dt，后端的处理，主要实现了包括数据清洗、数据特征提取、决策树分类器的训练、测试等功能，为前端提供逻辑处理和数据，具体代码在下一部分介绍。
 * SpamDT 文件夹，Django 项目的设置
@@ -48,7 +48,7 @@
 
 * 决策树实现相关
 
-  dt文件中的源代码大多数都可以单独测试，即那些下面有__main__ 函数的
+  dt文件中的源代码大多数都可以单独测试，即那些下面有 __main__  函数的
 
   * `my_dt.py`，基于最大信息熵、最大信息增益和最大信息增益比三种决策树算法的实现，是整个项目的主要功能
   * `pre_process.py`，对数据进行预处理，主要完成了特征抽取工作
@@ -64,13 +64,13 @@
 
 ### 程序运行方式
 
-可以通过 Pycharm 导入打开，支持命令行运行和 Web UI 运行。为了提高演示的效率，对实际演示的数据集进行了缩减，完整结果请根据注释中 main 函数的地方或者是 views.py 的 index 函数中的对应地方修改。 
+可以通过 Pycharm 导入打开，支持命令行运行和 Web UI 运行。为了提高演示的效率，对实际演示的数据集进行了缩减，完整结果请根据注释中 `__main__` 函数的地方或者是 `views.py` 的 `index` 函数中的对应地方修改。 
 
 *注意1：基于命令行的运行方式，需要通过对 main.py 中的部分代码注释，具体操作请根据注释！*
 
 *注意2：由于 python 环境和项目设置的路径不同，需要根据实际情况修改。直接运行可能会出错。有的时候需要重新选择一下 Python interpreter 就没有问题了。*
 
-* 只使用命令行的分类，在 Pycharm 中运行比较方便，也可以在命令行，切换到根目录中，然后输入 “pythonmain.py”运行，等待结果输出。 Pycharm 中的设置主要是 Script path （请指定好自己的 python 路径）和 Working directory（到根目录为止，即 xxx/xxx/SpamDT）:
+* 只使用命令行的分类，在 Pycharm 中运行比较方便，也可以在命令行，切换到根目录中，然后输入 `python main.py` 运行，等待结果输出。 Pycharm 中的设置主要是 Script path （请指定好自己的 python 路径）和 Working directory（到根目录为止，即 xxx/xxx/SpamDT）:
 
   * 首先对数据进行清洗，选择合法有效的数据，参考 `main.py` 的 16-22 行代码
   * 特征抽取，`main.py` 的 31-48 行代码，这个部分比较慢，因为数据量还挺大的

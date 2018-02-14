@@ -22,3 +22,6 @@
 
 使用决策树对邮件进行是否垃圾邮件的分类，支持简单 Web UI
 
+### 5. [微博爬虫与情感分析](./WeiboSentiment)
+Scrapy 爬虫，SnowNLP 情感分析
+

@@ -1,0 +1,10 @@
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (2, '//weibo.com/tv/v/G1KabpVNA', '這是我為我可愛的弟弟@黃淘淘Chaw 主演的#0309媽媽咪鴨#演唱的主題曲《帶我回家》。春節就要到了。希望這首歌能給大家的回家路添一分溫暖。也希望大家能在3月9日去支持這部有趣又溫暖的電影《媽媽咪鴨》。 @電影媽媽咪鴨 L猫眼电影的秒拍视频', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (3, '//weibo.com/2998639325/G1Jyk0s4Q?ref=feedsdk', 'ZARA的童包戳中了中年少女的心啊啊啊啊啊[笑cry][笑cry][笑cry]', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (4, '//weibo.com/tv/v/G1IvocpUa', '格兰芬多三巨头的珍贵试镜片段，那时候的三人组真是超级可爱！赫敏的机灵与罗恩的呆萌，小哈利的眼睛里像是藏了一块蓝宝石L微博电影工厂的秒拍视频[憧憬]', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (5, '//weibo.com/2929743983/G1K95r9Pd?ref=feedsdk', '北京一家人团聚了，堂妈下厨做海鲜，大头片生鱼片，婆婆炒青菜炖鸡，在吃一桌好饭的同时，也享受团圆的幸福。', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (6, '//weibo.com/tv/v/G1P3vDikw', '【8旬老人3万现金被烧 银行用镊子拼回2万多】1月15日，黄女士家中线路老化起火，父亲存放在家中的3万元现金被烧得面目全非，而这些钱是老人一生的积蓄。抱着试一试的心态，黄女士带着残币来到银行。工作人员花费8个多小时分拣统计，最终帮助兑换回22850元现金。@封面新闻 L封面新闻视频的秒拍视频[心]', null, 0);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (7, '//weibo.com/tv/v/G1HUn5ur0', '【年度大赏第五弹---吐血雷品篇】令我大失所望的产品大合集看了前几期的种草轰炸，钱包君吃不消了吧？不要怕！今天给大家灭草省钱！保证看完少花冤枉钱！大家也可以分享自己的雷品哦！@微博时尚 #新年有新颜# L帅你一脸毛蛋的秒拍视频[泪][doge]', null, 0);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (8, '//weibo.com/tv/v/G1K4N9xXx', '90年代的日本综艺《超级变变变》不仅承载了我们的童年欢笑与回忆，更是以其强大的创造力与想象力成为综艺界经典。那些真实的活力与爱，甚至像一场生命的献礼，平凡也可以闪耀，蠢也可以可爱。一起看《超级变变变》30年（1979～2008）冠军回顾L林萍在日本的秒拍视频[跪了][跪了][跪了]', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (9, '//weibo.com/1732833563/G1KbhBfZx?ref=feedsdk', '今天，我们七周年不抛弃不放弃，我们一起走！[心][心]', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (10, 'https://weibo.com/ttarticle/p/show?id=2309404204382068568599', '“哇嘎俚共”，带上教你说闽南话的明信片，美丽漳州走起！', null, 1);
+INSERT INTO weibo.weibo (id, url, content, wb_from, sentiment) VALUES (11, '//weibo.com/1699432410/G1L9Lq6SK?ref=feedsdk', '【兄弟，累了就歇歇吧】云南因寒潮连续遭遇冰冻雨雪天气。三天来，25岁的曲靖市交警支队辅警赵坤，每天在寒风中工作的时间超过了10个小时。5日，在整整值守了13个小时后，赵坤还没顾上啃完手中的面包，就已在车上睡着。[心][心][心]', null, 0);
