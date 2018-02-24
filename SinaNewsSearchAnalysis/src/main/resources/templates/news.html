@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre.min.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre-exp.min.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre-icons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title> 新闻详情 </title>
+</head>
+
+<body>
+<div class="container">
+    <header class="navbar navbar-header">
+        <section class="navbar-section">
+            <img class="img-logo" th:src="@{/img/logo.png}">
+        </section>
+        <section class="navbar-center">
+            <!-- centered logo or brand -->
+        </section>
+        <section class="navbar-section">
+            <a th:href="@{/home}" class="btn btn-link"> 主页 </a>
+            <a th:href="@{/logout}" class="btn btn-link"> 退出 </a>
+        </section>
+    </header>
+    <div class="content">
+        <h4> 【<span th:text="${categoryText}"> </span>】<a th:href="${url}" th:text="${title}" target="_blank"></a></h4>
+        <p class="text-gray" th:utext="${date}"></p>
+        <div class="content" th:each="para : ${content}">
+            <p th:text="${para}"> 无正文，点击标题跳转至原文链接查看！</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

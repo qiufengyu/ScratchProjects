@@ -22,6 +22,12 @@
 
 使用决策树对邮件进行是否垃圾邮件的分类，支持简单 Web UI
 
-### 5. [微博爬虫与情感分析](./WeiboSentiment)
+### 6. [微博爬虫与情感分析](./WeiboSentiment)
 Scrapy 爬虫，SnowNLP 情感分析
+
+### 7. [新浪滚动新闻分类与检索](./SinaNewsSearchAnalysis)
+
+获取新浪滚动新闻，使用 Lucene 建立索引以供搜索，deeplearning4j 进行简单的文本分类，基于 Spring Boot 的 Web 应用
+
+
 

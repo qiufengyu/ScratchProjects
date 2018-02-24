@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre.min.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre-exp.min.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre-icons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title>登录</title>
+</head>
+
+<body>
+<div class="container">
+    <header class="navbar navbar-header">
+        <section class="navbar-section">
+            <img class="img-logo" th:src="@{/img/logo.png}">
+        </section>
+        <section class="navbar-center">
+            <!-- centered logo or brand -->
+        </section>
+        <section class="navbar-section">
+            <a th:href="@{/registration}" class="btn btn-link"> 注册 </a>
+        </section>
+    </header>
+
+    <div class="content">
+        <form method="POST" th:action="@{/login}">
+            <div class="form-group">
+                <label class="form-label" for="username"> 用户名 </label>
+                <input class="form-input" id="username" name="username" placeholder="username" type="text">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password"> 密码 </label>
+                <input class="form-input" id="password" name="password" placeholder="password" type="password" />
+            </div>
+            <div th:if="${param.error}">
+                <p class="validation-message"> 用户名或密码错误，请检查后重试！</p>
+            </div>
+            <div class="form-group" style="margin-top: 16px">
+                <button class="btn btn-primary btn-block" name="submit" type="submit" value="login">登录</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>

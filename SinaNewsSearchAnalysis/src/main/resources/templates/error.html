@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+
+    <title>404</title>
+</head>
+<body>
+<div class="container">
+    <header class="navbar navbar-header">
+        <section class="navbar-section">
+            <img class="img-logo" th:src="@{/img/logo.png}">
+        </section>
+        <section class="navbar-center">
+            <!-- centered logo or brand -->
+        </section>
+        <section class="navbar-section">
+            <a th:href="@{/}" class="btn btn-link"> 主页 </a>
+        </section>
+    </header>
+
+    <div class="content">
+        <h3 style="color: red"> 请求错误！</h3>
+        <p th:text="'错误代码：'+ ${errorcode}"></p>
+        <p th:text="'错误名称：'+ ${error}"></p>
+        <p th:text="'错误消息：'+ ${message}"></p>
+        <p th:text="'时间：'+ ${timestamp}"></p>
+        <p th:text="'错误详情：'+ ${trace}"></p>
+    </div>
+</div>
+
+
+
+</body>
+</html>

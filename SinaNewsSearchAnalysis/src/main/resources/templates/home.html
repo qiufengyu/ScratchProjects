@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre.min.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre-exp.min.css}">
+    <link rel="stylesheet" th:href="@{/css/spectre/spectre-icons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pagination.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title> Home </title>
+</head>
+
+<body>
+<div class="container">
+    <!-- 网页 logo 与导航 -->
+    <header class="navbar navbar-header">
+        <section class="navbar-section">
+            <img class="img-logo" th:src="@{/img/logo.png}">
+        </section>
+        <section class="navbar-center">
+            <!-- centered logo or brand -->
+        </section>
+        <section class="navbar-section">
+            <a th:href="@{/admin/home}" class="btn btn-link" th:if="${isAdmin}"> 高级功能（管理员）</a>
+            <a th:href="@{/logout}" class="btn btn-link"> 退出 </a>
+        </section>
+    </header>
+
+    <div class="content">
+
+        <div class="panel" style="margin-bottom: 24px;">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <p><span th:text="${welcome}"></span> </p>
+                </div>
+            </div>
+        </div>
+        <!-- 搜素框 -->
+        <div class="input-group">
+            <input class="form-input" type="text" id="query" name="query">
+            <button class="btn btn-primary input-group-btn btn-search" id="btn-search">  &nbsp;搜索&nbsp; </button>
+        </div>
+
+        <!-- 默认加载最新新闻 -->
+        <div class="latest-news" id="latest-news" th:if="${not #lists.isEmpty(latestNews)}">
+            <table class="table">
+                <tr><th>id</th><th>新闻标题</th><th>类别</th></tr>
+                <tr th:each="news : ${latestNews}">
+                    <td th:text="${news.id}"> 0 </td>
+                    <td><a th:href="'/news/'+ ${news.id}" th:text="${news.title}"> 标题 </a></td>
+                    <td><a th:href="'/category/' + ${news.category}" th:text="${news.categoryText}"> 类别 </a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="searched-news">
+            <div id="data-container"></div>
+            <div class="pagination justify-content-center">
+                <div id="pagination-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="http://pagination.js.org/dist/2.1.2/pagination.min.js"></script>
+<script>
+    function simpleTemplating(data) {
+        var html = '<table class="table"><tr><th>id</th><th>新闻标题</th><th>类别</th></tr>';
+        $.each(data, function(index, item){
+            html += ('<tr><td>'+ item.id +
+                '</td><td><a href="/news/'+ item.id + '">'+
+                item.title + '</a></td><td><a href="/category/"' +
+                item.category + '">' + item.categoryText +'</a></td></tr>');
+        });
+        html += '</table>';
+        return html;
+    }
+    $('body').on('click', '#btn-search', function () {
+        // 原本的最新新闻，不显示
+        $("div#latest-news").hide();
+        var search_input = $('input#query').val();
+        // alert(search_input);
+        $('div#pagination-container').pagination({
+            dataSource: function (done) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/search',
+                    data: {query: search_input},
+                    dataType: 'json',
+                    success: function (response) {
+                        done(response);
+                    }
+                });
+            },
+            callback: function (data, pagination) {
+                // template method of yourself
+                var html = simpleTemplating(data);
+                $('div#data-container').html(html);
+            },
+            className: 'paginationjs-theme-blue paginationjs-big'
+        });
+    });
+</script>
+</body>
+</html>
