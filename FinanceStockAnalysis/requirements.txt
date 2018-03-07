@@ -1,0 +1,12 @@
+numpy>=1.14.0
+pandas>=0.22.0
+scipy>=1.0.0
+scikit-learn>=0.19.1
+lxml>=4.1.1
+requests>=2.18.4
+beautifulsoup4>=4.6.0
+tushare>=1.1.6
+pymysql>=0.8.0
+snownlp>=0.12.3
+Django>=2.0.2
+djangorestframework>=3.7.7

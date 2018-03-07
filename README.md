@@ -29,5 +29,9 @@ Scrapy 爬虫，SnowNLP 情感分析
 
 获取新浪滚动新闻，使用 Lucene 建立索引以供搜索，deeplearning4j 进行简单的文本分类，基于 Spring Boot 的 Web 应用
 
+### 8. [金融（股票）数据采集与分析](./FinanceStockAnalysis)
+
+获取股票的历史行情和新浪股吧的相关讨论，简单预测开盘、收盘价格及涨跌趋势
+
 
 
