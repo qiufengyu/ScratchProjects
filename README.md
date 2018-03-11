@@ -33,5 +33,7 @@ Scrapy 爬虫，SnowNLP 情感分析
 
 获取股票的历史行情和新浪股吧的相关讨论，简单预测开盘、收盘价格及涨跌趋势
 
+### 9. [垃圾邮件过滤（贝叶斯&MLP)](./SpamBayesMLP)
 
+使用朴素贝叶斯分类器和多层感知机对垃圾邮件进行分类与过滤，Java，Deeplearning4j & Spring Boot
 

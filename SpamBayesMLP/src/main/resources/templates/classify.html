@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 加载字体和图标 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/materialize.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title> Classify </title>
+</head>
+
+<body>
+    <!-- 网页 logo 与导航 -->
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo"><img th:src="@{/img/head.png}" height="52px"> </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a th:href="@{/}"> 返回主页 </a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a th:href="@{/}"> 返回主页 </a></li>
+            </ul>
+            <a th:href="@{/}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <form class="col s12" th:action="@{/classify}" method="post">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea" class="materialize-textarea" name="emailText" style="line-height: 145%" th:text="${holder}"></textarea>
+                            <label for="textarea">输入电子邮件文本</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s2">
+                            <button class="btn waves-effect waves-light" type="submit" name="action1"> 提交
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                        <div class="col s2">
+                            <button class="btn waves-effect waves-light" id="cclear" type="button" name="action2"> 清除
+                                <i class="material-icons right">clear</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div th:if="${result} == 1">
+                <h5> 分析结果 </h5>
+                <p class="help-text"> "极有可能"，表示两个分类器给出同样的结果；否则显示"可能"，并且以 MLP 结果为准。</p>
+                <p><span th:text="${resultTextPrefix}"></span> <span class="red-text text-accent-2"> 垃圾邮件 </span>.</p>
+            </div>
+            <div th:if="${result} == 0">
+                <h5> 分析结果</h5>
+                <p class="help-text"> "极有可能"，表示两个分类器给出同样的结果；否则显示"可能"，并且以 MLP 结果为准。</p>
+                <p><span th:text="${resultTextPrefix}"></span> <span class="blue-text text-accent-2"> 正常邮件 </span>.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="page-footer teal">
+        <div class="footer-copyright">
+            <div class="container">
+                主题由 <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a> 提供，数据支持：<a class="brown-text text-lighten-3" href="https://archive.ics.uci.edu/ml/datasets/spambase"> UCI Machine Learning Repository</a>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script th:src="@{/js/materialize.min.js}"></script>
+<script>
+    M.textareaAutoResize($('#textarea'));
+    $("#cclear").on('click', function() {
+        $("#textarea").val("");
+        M.textareaAutoResize($('#textarea'));
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 加载字体和图标 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/materialize.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title> Home </title>
+</head>
+
+<body>
+    <!-- 网页 logo 与导航 -->
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo"><img th:src="@{/img/head.png}" height="52px"> </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a th:href="@{/classify}"> 邮件识别 </a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a th:href="@{/classify}"> 邮件识别 </a></li>
+            </ul>
+            <a th:href="@{/classify}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">mail_outline</i></a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <form th:action="@{/}" method="post">
+                    <div class="input-field col m10">
+                        <select id="algSelect" name="algSelect">
+                            <option value="0"> Bayes - 朴素贝叶斯分类器</option>
+                            <option value="1"> MLP - 多层感知机分类器</option>
+                        </select>
+                        <label for="algSelect">选择过滤算法</label>
+                    </div>
+                    <div class="input-field col m2">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> 提交
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="col s12 m6" id="results">
+                    <h5 th:text="${algTitle}"></h5>
+                    <ul>
+                        <li th:text="${averageAcc}"></li>
+                        <li th:text="${spamAcc}"></li>
+                        <li th:text="${hamAcc}"></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="page-footer teal">
+        <div class="footer-copyright">
+            <div class="container">
+                主题由 <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a> 提供，数据支持：<a class="brown-text text-lighten-3" href="https://archive.ics.uci.edu/ml/datasets/spambase"> UCI Machine Learning Repository</a>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script th:src="@{/js/materialize.min.js}"></script>
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
+</body>
+</html>

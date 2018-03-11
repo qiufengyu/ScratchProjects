@@ -35,7 +35,7 @@
 * `requirements.txt`，python 环境与需要安装的第三方依赖包
 * `stocklist.txt`，保存了沪深股票的股票代码和股票名称
 
- 
+
 
 ### 主要代码文件说明
 
@@ -70,3 +70,13 @@
 #### Web UI 演示运行
 
 专业版 Pycharm 可以直接运行 Django 项目，也可以在当前目录下，使用 `python manage.pyrunserver 8000` 运行，当有如下的提示后，可以访问 <http://127.0.0.1:8000> ，看到项目的 UI 界面，下面的操作请直接在网页上操作即可。
+
+```
+March 07, 2018 - 19:24:23
+Django version 2.0.2, using settings 'Finance.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK
+```
+
+
+
