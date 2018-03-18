@@ -37,3 +37,7 @@ Scrapy 爬虫，SnowNLP 情感分析
 
 使用朴素贝叶斯分类器和多层感知机对垃圾邮件进行分类与过滤，Java，Deeplearning4j & Spring Boot
 
+### 10. [Hadoop学生考试成绩统计分析](./HadoopGrades)
+
+使用 Hadoop MapReduce 对某校学生在计算机课程基础这门课上的考试成绩进行统计和分析
+

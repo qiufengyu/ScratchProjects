@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 加载字体和图标 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/materialize.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title> 计算机基础课程成绩分析 </title>
+</head>
+
+<body>
+    <!-- 网页 logo 与导航 -->
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo"><img th:src="@{/img/head.png}" height="52px"> </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a th:href="@{/compare}"> 历年成绩对比 </a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a th:href="@{/compare}"> 历年成绩对比 </a></li>
+            </ul>
+            <a th:href="@{/compare}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">grain</i></a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="section">
+            <h5 class="header"> 成绩情况查询</h5>
+            <div class="row">
+                <form th:action="@{/}" method="post">
+                    <div class="input-field col m2">
+                        <select id="yearSelect" name="yearSelect">
+                            <option value="2017" th:selected="(${val1} == 2017)"> 2017 年</option>
+                            <option value="2016" th:selected="(${val1} == 2016)"> 2016 年 </option>
+                            <option value="2015" th:selected="(${val1} == 2015)"> 2015 年</option>
+                            <option value="2014" th:selected="(${val1} == 2014)"> 2014 年 </option>
+                        </select>
+                        <label for="yearSelect"> 选择年份 </label>
+                    </div>
+                    <div class="input-field col m4">
+                        <select id="departSelect" name="departSelect">
+                            <option value="2" th:selected="(${val2} == 2)"> 全校 </option>
+                            <option value="1" th:selected="(${val2} == 1)"> 体育学院 </option>
+                            <option value="3" th:selected="(${val2} == 3)"> 地理信息与旅游学院 </option>
+                            <option value="4" th:selected="(${val2} == 4)"> 外国语学院 </option>
+                            <option value="5" th:selected="(${val2} == 5)"> 教育科学学院 </option>
+                            <option value="6" th:selected="(${val2} == 6)"> 数学与金融学院 </option>
+                            <option value="7" th:selected="(${val2} == 7)"> 文学与传媒学院 </option>
+                            <option value="8" th:selected="(${val2} == 8)"> 机械与汽车工程学院 </option>
+                            <option value="9" th:selected="(${val2} == 9)"> 材料与化学工程学院 </option>
+                            <option value="10" th:selected="(${val2} == 10)"> 外国语学院 </option>
+                            <option value="11" th:selected="(${val2} == 11)"> 电子与电气工程学院 </option>
+                            <option value="12" th:selected="(${val2} == 12)"> 经济与管理学院 </option>
+                            <option value="13" th:selected="(${val2} == 13)"> 美术与设计学院 </option>
+                            <option value="14" th:selected="(${val2} == 14)"> 音乐学院 </option>
+                        </select>
+                        <label for="departSelect"> 选择专业 </label>
+                    </div>
+                    <div class="input-field col m4">
+                        <select id="itemSelect" name="itemSelect">
+                            <option value="1" th:selected="(${val3} == 1)"> 全部 </option>
+                            <option value="2" th:selected="(${val3} == 2)"> 考试人数 </option>
+                            <option value="3" th:selected="(${val3} == 3)"> 平均分 </option>
+                            <option value="4" th:selected="(${val3} == 4)"> &gt;= 90 占比 </option>
+                            <option value="5" th:selected="(${val3} == 5)"> 80-89 占比 </option>
+                            <option value="6" th:selected="(${val3} == 6)"> 70-79 占比 </option>
+                            <option value="7" th:selected="(${val3} == 7)"> 60-69 占比 </option>
+                            <option value="8" th:selected="(${val3} == 8)"> &lt; 60 占比 </option>
+                            <option value="9" th:selected="(${val3} == 9)"> 优秀占比 </option>
+                            <option value="10" th:selected="(${val3} == 10)"> 合格占比 </option>
+                            <option value="11" th:selected="(${val3} == 11)"> 不合格占比 </option>
+                        </select>
+                        <label for="itemSelect"> 选择查询项目 </label>
+                    </div>
+                    <div class="input-field col m2">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> 查询
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col s12" id="results" th:if="${tableTitle}">
+                    <ul class="collection with-header">
+                        <li class="collection-header"><h5 th:text="${tableTitle}"></h5></li>
+                        <li class="collection-item" th:text="'合计考试人数：' + ${counts}"></li>
+                        <li class="collection-item" th:text="'平均分：' +  ${average}"></li>
+                        <li class="collection-item" th:text="'>=90 分比例：' +  ${gradeA}"></li>
+                        <li class="collection-item" th:text="'80-89 分比例：' +  ${gradeB}"></li>
+                        <li class="collection-item" th:text="'70-79 分比例：' +  ${gradeC}"></li>
+                        <li class="collection-item" th:text="'60-69 分比例：' +  ${gradeD}"></li>
+                        <li class="collection-item" th:text="'<60 分比例：' +  ${gradeF}"></li>
+                        <li class="collection-item" th:text="'优秀比例：' +  ${excellent}"></li>
+                        <li class="collection-item" th:text="'合格比例：' +  ${quali}"></li>
+                        <li class="collection-item" th:text="'不合格分比例：' +  ${failed}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row" th:if="${tableTitle}">
+                <div class="col m6" id="grades" style="height:520px;"></div>
+                <div class="col m6" id="qualified" style="height:520px"></div>
+            </div>
+
+            <div class="row" th:if="${itemTitle}">
+                <div class="col s12" id="itemResult" >
+                    <ul class="collection with-header">
+                        <li class="collection-header"><h5 th:text="${itemTitle}"></h5></li>
+                        <li class="collection-item" th:text="${itemResult}"></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="page-footer teal">
+        <div class="footer-copyright">
+            <div class="container">
+                主题由 <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a> 提供
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script th:src="@{/js/materialize.min.js}"></script>
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
+<script th:src="@{/js/echarts.common.min.js}"></script>
+<script th:inline="javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('grades'));
+    // 指定图表的配置项和数据
+    option1 = {
+        title : {
+            text: '成绩等级比例（人数）',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['>=90 分', '80-89 分', '70-79 分', '60-69 分', '<60 分']
+        },
+        series : [
+            {
+                name: '',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value: /*[[${gradeACount}]]*/, name: '>=90 分'},
+                    {value: /*[[${gradeBCount}]]*/, name: '80-89 分'},
+                    {value: /*[[${gradeCCount}]]*/, name: '70-79 分'},
+                    {value: /*[[${gradeDCount}]]*/, name: '60-69 分'},
+                    {value: /*[[${gradeFCount}]]*/, name: '<60 分'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart1.setOption(option1);
+
+    // 第二张图
+    var myChart2 = echarts.init(document.getElementById('qualified'));
+    // 指定图表的配置项和数据
+    option2 = {
+        title : {
+            text: '优秀合格率比例',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['优秀', '合格', '不合格']
+        },
+        series : [
+            {
+                name: '',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:/*[[${excellentCount}]]*/, name: '优秀'},
+                    {value:/*[[${qualifiedCount}]]*/, name: '合格'},
+                    {value:/*[[${failedCount}]]*/, name: '不合格'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+</script>
+
+</body>
+</html>

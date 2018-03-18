@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 加载字体和图标 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- 加载 css -->
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/materialize.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/icon.png}">
+    <title> 计算机基础课程成绩分析 </title>
+</head>
+
+<body>
+    <!-- 网页 logo 与导航 -->
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo"><img th:src="@{/img/head.png}" height="52px"> </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a th:href="@{/index}"> 综合查询 </a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a th:href="@{/index}"> 综合查询 </a></li>
+            </ul>
+            <a th:href="@{/index}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">grain</i></a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="section">
+            <h5 class="header"> 成绩情况查询 </h5>
+            <div class="row">
+                <form th:action="@{/compare}" method="post">
+                    <div class="input-field col m5">
+                        <select id="departSelect" name="departSelect">
+                            <option value="2" th:selected="(${val2} == 2)"> 全校 </option>
+                            <option value="1" th:selected="(${val2} == 1)"> 体育学院 </option>
+                            <option value="3" th:selected="(${val2} == 3)"> 地理信息与旅游学院 </option>
+                            <option value="4" th:selected="(${val2} == 4)"> 外国语学院 </option>
+                            <option value="5" th:selected="(${val2} == 5)"> 教育科学学院 </option>
+                            <option value="6" th:selected="(${val2} == 6)"> 数学与金融学院 </option>
+                            <option value="7" th:selected="(${val2} == 7)"> 文学与传媒学院 </option>
+                            <option value="8" th:selected="(${val2} == 8)"> 机械与汽车工程学院 </option>
+                            <option value="9" th:selected="(${val2} == 9)"> 材料与化学工程学院 </option>
+                            <option value="10" th:selected="(${val2} == 10)"> 外国语学院 </option>
+                            <option value="11" th:selected="(${val2} == 11)"> 电子与电气工程学院 </option>
+                            <option value="12" th:selected="(${val2} == 12)"> 经济与管理学院 </option>
+                            <option value="13" th:selected="(${val2} == 13)"> 美术与设计学院 </option>
+                            <option value="14" th:selected="(${val2} == 14)"> 音乐学院 </option>
+                        </select>
+                        <label for="departSelect"> 选择专业 </label>
+                    </div>
+                    <div class="input-field col m5">
+                        <select id="itemSelect" name="itemSelect">
+                            <option value="1" th:selected="(${val3} == 1)"> 全部 </option>
+                            <option value="2" th:selected="(${val3} == 2)"> 考试人数 </option>
+                            <option value="3" th:selected="(${val3} == 3)"> 平均分 </option>
+                            <option value="4" th:selected="(${val3} == 4)"> >= 90 占比 </option>
+                            <option value="5" th:selected="(${val3} == 5)"> 80-89 占比 </option>
+                            <option value="6" th:selected="(${val3} == 6)"> 70-79 占比 </option>
+                            <option value="7" th:selected="(${val3} == 7)"> 60-69 占比 </option>
+                            <option value="8" th:selected="(${val3} == 8)"> < 60 占比 </option>
+                            <option value="9" th:selected="(${val3} == 9)"> 优秀占比 </option>
+                            <option value="10" th:selected="(${val3} == 10)"> 合格占比 </option>
+                            <option value="11" th:selected="(${val3} == 11)"> 不合格占比 </option>
+                        </select>
+                        <label for="itemSelect"> 选择比较项目 </label>
+                    </div>
+                    <div class="input-field col m2">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> 查询
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row" th:if="${showTable}">
+                <h5 class="header">历年数据对比</h5>
+                <div class="col m12">
+                    <table class="bordered highlight responsive-table">
+                        <thead>
+                        <tr>
+                            <th> 年份 </th>
+                            <th> 考试人数 </th>
+                            <th> 平均分 </th>
+                            <th> &gt;=90 分 </th>
+                            <th> 80-89 分 </th>
+                            <th> 70-79 分 </th>
+                            <th> 60-69 分 </th>
+                            <th> &lt;60 分 </th>
+                            <th> 优秀 </th>
+                            <th> 合格 </th>
+                            <th> 不合格 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="sublist : ${llist}">
+                            <td th:each="item: ${sublist}"><span th:text="${item}"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row" th:if="${single}">
+                <div class="col m12" id="compare" style="height:520px;"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <footer class="page-footer teal">
+        <div class="footer-copyright">
+            <div class="container">
+                主题由 <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a> 提供
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script th:src="@{/js/materialize.min.js}"></script>
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
+<script th:src="@{/js/echarts.common.min.js}"></script>
+<script th:inline="javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('compare'));
+    // 指定图表的配置项和数据
+    option = {
+        title: {
+            text: /*[[${singleTitle}]]*/
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            type: 'category',
+            data: ['2014', '2015', '2016', '2017']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: /*[[${values}]]*/,
+            type: 'line',
+            markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'}
+                ]
+            }
+        }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+</body>
+</html>
