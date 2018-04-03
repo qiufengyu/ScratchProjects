@@ -17,6 +17,9 @@
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
         <img src="{% static 'img/weibo-icon.png' %}"> <a id="logo-container" href="#" class="brand-logo"> &nbsp;微博情感分析展示与标注系统</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'analysis' %}"> 微博分析 </a></li>
+        </ul>
     </div>
 </nav>
 
@@ -38,23 +41,31 @@
                     <label for="source">情感极性</label>
                     {% if weibo.sentiment >= 0.5 %}
                         <p>
-                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="positive" value="1"
-                                   checked="checked"/>
-                            <label for="positive"> 正向情感 </label>
+                            <label>
+                                <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="positive" value="1"
+                                       checked="checked"/>
+                                <span>正向情感</span>
+                            </label>
                         </p>
                         <p>
-                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="negative" value="0"/>
-                            <label for="negative"> 负向情感 </label>
+                            <label>
+                                <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="negative" value="0"/>
+                                <span>负向情感</span>
+                            </label>
                         </p>
                     {% else %}
                         <p>
-                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="positive" value="1"/>
-                            <label for="positive"> 正向情感 </label>
+                            <label>
+                                <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="positive" value="1"/>
+                                <span>正向情感</span>
+                            </label>
                         </p>
                         <p>
-                            <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="negative" value="0"
+                            <label>
+                                <input class="with-gap" name="group{{ weibo.candid }}" type="radio" id="negative" value="0"
                                    checked="checked"/>
-                            <label for="negative"> 负向情感 </label>
+                                <span>负向情感</span>
+                            </label>
                         </p>
                     {% endif %}
                 {% endfor %}

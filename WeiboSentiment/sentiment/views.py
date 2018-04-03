@@ -134,3 +134,20 @@ class IndexView(View):
       sentiment.save('sentiment.marshal')
       print("训练完成！")
       return redirect('index')
+
+class AnalysisView(View):
+  def get(self, request, *args, **kwargs):
+    return render(request, 'analysis.html')
+
+  def post(self, request, *args, **kwargs):
+    print(request.POST)
+    weibo_text = request.POST.get('weiboText', '')
+    weibo_text = weibo_text.strip()
+    senti = SnowNLP(weibo_text).sentiments
+    if senti > 0.5:
+      senti_value = "正向情感"
+    else:
+      senti_value = "负向情感"
+    return render(request, 'analysis.html', context={'holder': weibo_text, 'res': 1, 'senti': senti_value})
+
+
