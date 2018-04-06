@@ -41,3 +41,9 @@ Scrapy 爬虫，SnowNLP 情感分析
 
 使用 Hadoop MapReduce 对某校学生在计算机课程基础这门课上的考试成绩进行统计和分析
 
+### 11. [新闻自动摘要与关键词提取](./NewsAbExtraction)
+
+借助 SnowNLP 实现的基于 TextRank 算法的自动摘要和关键词提取技术，解析新闻
+
+
+

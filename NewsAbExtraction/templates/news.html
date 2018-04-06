@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+{% load myTag %}
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title> 关键词与自动摘要提取 </title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'css/materialize.min.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">关键词与摘要自动生成</a>
+        <ul class="right hide-on-med-and-down">
+        <li><a href="{% url 'index' %}"> 返回主页 </a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="{% url 'index' %}"> 返回主页 </a></li>
+      </ul>
+      <a href="{% url 'index' %}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <div class="container">
+      <div class="section">
+          {% if item %}
+          <div class="row">
+              <h5><a href="{{ item.url }}" target="_blank">{{ item.title }}</a></h5>
+              <p class="helper-text small"> 时间：{{ item.time }}，点击标题访问新闻来源</p>
+              <p> 关键词：{{ item.keywords }}</p>
+              <p>【自动摘要】{{ item.summary }}。</p>
+          <hr />
+          {% for para in item.content %}
+              <p> {{ para }} </p>
+          {% empty %}
+              <p class="red-text text-accent-2"> 该新闻没有具体内容，可能是图片数据，请点击标题访问原链接。</p>
+          {% endfor %}
+          </div>
+          {% else %}
+              <div class="row">
+              <p class="deep-orange-text text-accent-2">内部数据库访问错误！</p>
+          </div>
+          {% endif %}
+      </div>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="footer-copyright">
+      <div class="container">
+      主题由 <a class="brown-text text-lighten-3" href="http://materializecss.com"> Materialize </a> 提供，新闻来自
+          <a class="brown-text text-lighten-3" href="http://roll.news.sina.com.cn/"> 新浪滚动新闻 </a> 。
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/materialize.min.js' %}"></script>
+
+</body>
+</html>

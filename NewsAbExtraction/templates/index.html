@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% load static %}
+{% load myTag %}
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title> 关键词与自动摘要提取 </title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'css/materialize.min.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">关键词与摘要自动生成</a>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <form class="col s12" action="{% url 'index' %}" method="get">
+          {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s10">
+              <input id="keywords" name="keywords" type="text" value="{{ holder }}" class="validate">
+              <label for="keywords">关键词</label>
+              <span class="helper-text" data-error="wrong" data-success="right">检索关键词，多个关键词使用空格间隔。</span>
+            </div>
+            <div class="input-field col s2">
+              <button class="btn waves-effect waves-light" type="submit" name="action">搜索
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+      <div class="section">
+      <div class="row">
+        <table class="table striped">
+            <thead>
+                <tr>
+                    <th>新闻序号</th>
+                    <th>标题</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>
+                        <p><a href="/news/{{ item.id }}" target="_blank">{{ item.title }}</a></p>
+                        <p class="grey-text text-darken-2 small"> 时间：{{ item.time }}，关键词：{{ item.keywords }}</p>
+                    </td>
+                </tr>
+                {% empty %}
+                    <p class="text-accent-2" style="margin: 1rem 0" id="">没有信息！</p>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="pagination center">
+            {% if items.has_previous %}
+                <a class="waves-effect waves-light btn blue accent-2" href="?{% url_replace page=items.previous_page_number %}">
+                    <i class="material-icons left">chevron_left</i> 上一页</a>
+            {% else %}
+                <a class="waves-effect waves-light btn blue accent-2 disabled" href="#">
+                    <i class="material-icons left">chevron_left</i> 上一页</a>
+            {% endif %}
+
+            <span class="current">
+                &nbsp;&nbsp;&nbsp;&nbsp;第 {{ items.number }} 页，共 {{ items.paginator.num_pages }} 页&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+
+            {% if items.has_next %}
+                <a class="waves-effect waves-light btn blue accent-2" href="?{% url_replace page=items.next_page_number %}">
+                    下一页 <i class="material-icons right">chevron_right</i></a>
+            {% else %}
+                <a class="waves-effect waves-light btn blue accent-2 disabled" href="#">
+                    下一页 <i class="material-icons right">chevron_right</i></a>
+            {% endif %}
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="footer-copyright">
+      <div class="container">
+      主题由 <a class="brown-text text-lighten-3" href="http://materializecss.com"> Materialize </a> 提供，新闻来自
+          <a class="brown-text text-lighten-3" href="http://roll.news.sina.com.cn/"> 新浪滚动新闻 </a> 。
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/materialize.min.js' %}"></script>
+
+</body>
+</html>
