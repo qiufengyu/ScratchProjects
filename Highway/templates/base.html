@@ -1,0 +1,120 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+	<title>Highway</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'vendor/linearicons/style.css' %}">
+	<link rel="stylesheet" href="{% static 'vendor/chartist/chartist.css' %}">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="highways-england-icon" sizes="240x100" href="{% static 'img/highways-england' %}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon.png' %}">
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+			<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/highways-england.jpg' %}" alt="Highways England Logo" class="img-responsive logo"></a>
+			<div id="search-box" class="mr-auto">
+                <div class="collapse navbar-collapse" id="nav-content">
+                    <div class="navbar-btn">
+                        <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                    </div>
+                    <form class="navbar-form mr-auto" action="{% url 'detail' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" name="evtID" value="" class="form-control" placeholder="Search incidents by eventID...">
+                        <div class="input-group-append"><button type="submit" class="btn btn-primary">Go</button></div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div id="navbar-menu" class="ml-auto">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'help' %}" class="icon-menu" ><i class="lnr lnr-question-circle"></i> <span style="font-size: 18px">Help</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'about' %}" class="icon-menu"><i class="lnr lnr-users"></i> <span style="font-size: 18px">About</span></a>
+                    </li>
+                </ul>
+            </div>
+		</nav>
+		<!-- END NAVBAR -->
+		<!-- LEFT SIDEBAR -->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+				<ul class="nav flex-column ">
+					<li class="nav-item"><a href="{% url 'index' %}" class="nav-link active"><i class="lnr lnr-home"></i>Home<span class="sr-only">(current)</span></a></li>
+					<li class="nav-item">
+							<a href="#subPages" data-toggle="collapse" class="nav-link collapsed"><i class="lnr lnr-alarm"></i>Incidents <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse">
+								<ul class="nav flex-column">
+									<li class="nav-item" id="details"><a href="{% url 'detail' %}" class="nav-link">Details</a></li>
+									<li class="nav-item" id="filtering"><a href="{% url 'filtering' %}" class="nav-link">Filtering</a></li>
+                                    <li class="nav-item" id="add"><a href="{% url 'add' %}" class="nav-link">Add</a></li>
+								</ul>
+							</div>
+					</li>
+					<li class="nav-item"><a href="{% url 'analysis' %}" class="nav-link"><i class="lnr lnr-chart-bars"></i> Analysis </a></li>
+					<!--
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-code"></i>Elements</a></li>
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-chart-bars"></i> Charts </a></li>
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-cog"></i> Panels</a></li>
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-alarm"></i> Notifications </a></li>
+					<li class="nav-item">
+						<a href="#subPages" data-toggle="collapse" class="nav-link collapsed"><i class="lnr lnr-file-empty"></i>Pages <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+						<div id="subPages" class="collapse">
+							<ul class="nav flex-column">
+								<li class="nav-item"><a href="#" class="nav-link">Profile</a></li>
+								<li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+								<li class="nav-item"><a href="#" class="nav-link">Lockscreen</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-dice"></i> Tables</a></li>
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-text-format"></i> Typography</a></li>
+					<li class="nav-item"><a href="#" class="nav-link"><i class="lnr lnr-linearicons"></i> Icons</a></li>
+				-->
+				</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+        {% block content %}
+        {% endblock %}
+		<!-- END MAIN -->
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright by <a href="#">Someone</a>
+				</p>
+			</div>
+		</footer>
+	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'vendor/fontawesome/js/fontawesome-all.min.js' %}"></script>
+	<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+	<script src="{% static 'vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js' %}"></script>
+	<script src="{% static 'vendor/chartist/chartist.min.js' %}"></script>
+	<script src="{% static 'scripts/klorofil-common.js' %}"></script>
+
+</body>
+
+</html>

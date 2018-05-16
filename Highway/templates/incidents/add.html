@@ -1,0 +1,233 @@
+{% extends 'incidents/base.html' %}
+{% load mytags %}
+
+{% block content %}
+<div id="sidebar-nav" class="sidebar">
+<div class="sidebar-scroll">
+    <nav>
+    <ul class="nav flex-column ">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link"><i class="lnr lnr-home"></i>Home</a></li>
+        <li class="nav-item">
+                <a href="#subPages" data-toggle="collapse" class="nav-link active"><i class="lnr lnr-alarm"></i>Incidents <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                <div id="subPages">
+                    <ul class="nav flex-column">
+                        <li class="nav-item" id="details"><a href="{% url 'detail' %}" class="nav-link">Details</a></li>
+                        <li class="nav-item" id="filtering"><a href="{% url 'filtering' %}" class="nav-link">Filtering</a></li>
+                        <li class="nav-item" id="add"><a href="{% url 'add' %}" class="nav-link active">Add</a></li>
+                    </ul>
+                </div>
+        </li>
+        <li class="nav-item"><a href="{% url 'analysis' %}" class="nav-link"><i class="lnr lnr-chart-bars"></i> Analysis </a></li>
+    </ul>
+    </nav>
+</div>
+</div>
+
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <h3 class="page-title">Add Incident</h3>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Detailed Incident</h3>
+                    {% if insert > 0 %}
+                        <p style="margin-top: 15px" class="text-primary"> Insert success! </p>
+                    {% endif %}
+                    {% if insert < 0 %}
+                        <p style="margin-top: 15px" class="text-danger"> Insert failed for internal error!</p>
+                    {% endif %}
+                </div>
+                <div class="panel-body">
+                    <form class="mr-auto" action="{% url 'add' %}" method="post">
+                        {% csrf_token %}
+                        <p class="panel-title" style="font-size: large"> BEHAVIOR AGENT </p>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="road-label" class="col-form-label"> POSITIVE AGENT </label>
+                                <select class="custom-select no-border-form" id='id-positive-agent' name="positive_agent">
+                                    <option selected value="Default"> No </option>
+                                    <option value="Person"> Person </option>
+                                    <option value="Animal"> Animal </option>
+                                    <option value="Facility"> Facility </option>
+                                    <option value="Vehicle"> Vehicle </option>
+                                    <option value="Other"> Other </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="road-label" class="col-form-label"> PASSIVE AGENT </label>
+                                <select class="custom-select no-border-form" id='id-passive-agent' name="passive_agent">
+                                    <option selected value="Default"> No </option>
+                                    <option value="Person"> Person </option>
+                                    <option value="Animal"> Animal </option>
+                                    <option value="Facility"> Facility </option>
+                                    <option value="Vehicle"> Vehicle </option>
+                                    <option value="Other"> Other </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="vehicle-label" class="col-form-label"> VEHICLE TYPE </label>
+                                <select class="custom-select no-border-form" id="id-vehicle" name="vehicle">
+                                    <option selected value="Default"> No </option>
+                                    <option value="Car" > Car</option>
+                                    <option value="Trunk"> Trunk </option>
+                                    <option value="Bus"> Bus </option>
+                                    <option value="Bike"> Bike </option>
+                                    <option value="Motor"> Motor </option>
+                                    <option value="Official Vehicles"> Official Vehicles </option>
+                                    <option value="Other"> Other </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <p class="panel-title" style="margin-top: 25px; font-size: large"> TIME & LOCATION</p>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="datetime-label" class="col-form-label"> DATETIME </label>
+                                <input data-format="yyyy-MM-dd" type="text" class="form-control" id="id-datetime" name="datetime">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="type-label" class="col-form-label"> LOCATION </label>
+                                <input type="text" class="form-control" id="id-location" name="location"
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <hr />
+                        <p class="panel-title" style="margin-top: 25px; font-size: large"> CONDITIONS </p>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="roadname-label" class="col-form-label"> ROAD NAME </label>
+                                <input type="text" name="road_name" value="" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="roadtype-label" class="col-form-label"> ROAD TYPE </label>
+                                <select class="custom-select no-border-form" id="id-roadtype" name="road_type">
+                                    <option value="A"> A </option>
+                                    <option value="B"> B </option>
+                                    <option value="C"> C </option>
+                                    <option value="M"> M </option>
+                                    <option value="R"> R </option>
+                                    <option selected value="Other"> Other </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="severity-label" class="col-form-label"> ROAD CONDITION </label>
+                                <select class="custom-select no-border-form" id="id-roadcondition" name="road_condition">
+                                    <option selected value="Normal"> Normal </option>
+                                    <option value="Wet"> Wet </option>
+                                    <option value="Freeze"> Freeze </option>
+                                    <option value="Dry"> Dry </option>
+                                    <option value="Collapse"> Collapse </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="speedlimit-label" class="col-form-label"> SPEED LIMIT (km/h) </label>
+                                <input type="text" name="speed_limit" id="id-speedlimit" value="" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="temperature-label" class="col-form-label"> TEMPERATURE (℃) </label>
+                                <input type="text" id="id-temperature" name="temperature" value="" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="weather-label" class="col-form-label"> WEATHER </label>
+                                <select class="custom-select no-border-form" id="id-weather" name="weather">
+                                    <option selected value="Sunny"> Sunny </option>
+                                    <option value="Cloudy"> Cloudy </option>
+                                    <option value="Rainy"> Rainy </option>
+                                    <option value="Windy"> Windy </option>
+                                    <option value="Storm"> Storm </option>
+                                    <option value="Foggy"> Foggy </option>
+                                    <option value="Snowy"> Snowy </option>
+                                </select>
+                            </div>
+                             <div class="form-group col-md-4">
+                                <label for="severity-label" class="col-form-label"> LIGHT </label>
+
+                                <select class="custom-select no-border-form" id="id-lightcondition" name="light_condition">
+                                    <option selected value="Normal"> Normal </option>
+                                    <option value="Strong"> Strong </option>
+                                    <option value="Dark"> Dark </option>
+                                    <option value="Dim"> Dim </option>
+                                    <option value="Dazzling"> Dazzling </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <p class="panel-title" style="margin-top: 25px; font-size: large"> Consequence </p>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="type-label" class="col-form-label"> TYPE </label>
+                                <select class="custom-select no-border-form" id="id-type" name="type">
+                                    <option selected value="Default"> No </option>
+                                    <option value="Damage" > Damage </option>
+                                    <option value="Injury"> Injury </option>
+                                    <option value="Death"> Death </option>
+                                    <option value="Broken"> Broken </option>
+                                    <option value="Other"> Other </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="severity-label" class="col-form-label"> SEVERITY </label>
+                                <select class="custom-select no-border-form" id="id-severity" name="severity">
+                                    <option value="Severe"> Severe </option>
+                                    <option value="Moderate"> Moderate </option>
+                                    <option selected value="Minor"> Minor </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <p class="panel-title" style="margin-top: 25px; font-size: large"> PLANNED </p>
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="plannedCheck" name="plannedCheck">
+                                    <label for="type-label" class="form-check-label"> PLANNED </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <select class="custom-select no-border-form" id="id-planned" name="planned" disabled>
+                                    <option value="Roadwork"> Road Work </option>
+                                    <option value="Traffic Control"> Traffic Control </option>
+                                    <option value="Sports Event"> Sports Event </option>
+                                    <option value="Other"> Other </option>
+                                 </select>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <p class="panel-title" style="margin-top: 25px; font-size: large"> DESCRIPTION </p>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" id="id-description" name="description" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                                <button type="submit" class="btn btn-primary"> Add! </button>
+                        </div>
+
+                        <p id="help-text" class="form-text text-muted" style="margin-top: 25px">
+                          Leave <strong>blank</strong> or select <strong>Default</strong>
+                            if some information are incomplete or you are uncertain.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+

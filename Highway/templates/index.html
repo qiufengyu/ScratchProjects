@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main" id="id_main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- OVERVIEW -->
+            <div class="panel panel-headline">
+                <div class="panel-heading">
+                    <h3>Overview</h3>
+                    <p class="panel-subtitle">Statistics of all incidents</p>
+                </div>
+                <div class="panel-body">
+                    <div class="single-metric">
+                        <span class="info-icon"><i class="fas fa-cubes fa-lg" style="color: white"></i></span>
+                        <p>In total, {{ total }} incidents.</p>
+                    </div>
+                    <h4>Severity</h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="metric">
+                                <span class="danger-icon"><i class="fas fa-info fa-lg" style="color: white"></i></span>
+                                <p>
+                                    <span class="number">{{ severe }}</span>
+                                    <span class="title">Severe</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric">
+                                <span class="warning-icon"><i class="fas fa-info fa-lg" style="color: white"></i></span>
+                                <p>
+                                    <span class="number">{{ moderate }}</span>
+                                    <span class="title">Moderate</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric">
+                                <span class="primary-icon"><i class="fas fa-info fa-lg" style="color: white"></i></span>
+                                <p>
+                                    <span class="number">{{ minor }}</span>
+                                    <span class="title"> Minor</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END OVERVIEW -->
+            <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Latest Incidents</h3>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                            <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body no-padding">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Agent</th>
+                                    <th>Vehicle</th>
+                                    <th>Speed</th>
+                                    <th>Weather</th>
+                                    <th>Type</th>
+                                    <th>Planned</th>
+                                    <th>Severity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for inci in incidents %}
+                                    <td><a href="{% url 'detail' %}{{ inci.id }}">{{ inci.positive_agent }}</a></td>
+                                    <td>{% if inci.vehicle %}
+                                        {{ inci.vehicle }}
+                                        {% else %}
+                                        NA
+                                    {% endif %} </td>
+                                    <td>{% if inci.speed_limit %}
+                                        {{ inci.speed_limit }}
+                                        {% else %}
+                                        0
+                                    {% endif %} </td>
+                                    <td>{% if inci.weather %}
+                                        {{ inci.weather }}
+                                        {% else %}
+                                        normal
+                                    {% endif %} </td>
+                                    <td>{% if inci.type %}
+                                        {{ inci.type }}
+                                        {% else %}
+                                        NA
+                                    {% endif %} </td>
+
+                                    <td><span class="{{ inci.planned_style }}">{{ inci.planned_text }}</span></td>
+
+                                    <td><span class="{{ inci.severity_style }}">{{ inci.severity_text }}</span></td>
+                                </tr>
+                                {% empty %}
+                                    <p style="color: red; margin: 1rem 0" id="empty_incidents">Sorry, internal server error!</p>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="mr-auto"><span class="panel-note"><i class="far fa-clock"></i> Lastest {{ limits }} incidents</span></div>
+                            <div class="ml-auto"><a href="#id_main"><span class="lnr lnr-arrow-up-circle"></span> Go up</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+

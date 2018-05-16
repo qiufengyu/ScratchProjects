@@ -1,0 +1,5 @@
+# conf files
+*.cnf
+
+# data files
+events.xml

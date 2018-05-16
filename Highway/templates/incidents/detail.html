@@ -1,0 +1,125 @@
+{% extends 'incidents/base.html' %}
+
+{% block content %}
+
+<div id="sidebar-nav" class="sidebar">
+<div class="sidebar-scroll">
+    <nav>
+    <ul class="nav flex-column ">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link"><i class="lnr lnr-home"></i>Home</a></li>
+        <li class="nav-item">
+                <a href="#subPages" data-toggle="collapse" class="nav-link active"><i class="lnr lnr-alarm"></i>Incidents <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                <div id="subPages">
+                    <ul class="nav flex-column">
+                        <li class="nav-item" id="details"><a href="{% url 'detail' %}" class="nav-link active">Details</a></li>
+                        <li class="nav-item" id="filtering"><a href="{% url 'filtering' %}" class="nav-link">Filtering</a></li>
+                        <li class="nav-item" id="add"><a href="{% url 'add' %}" class="nav-link">Add</a></li>
+                    </ul>
+                </div>
+        </li>
+        <li class="nav-item"><a href="{% url 'analysis' %}" class="nav-link"><i class="lnr lnr-chart-bars"></i> Analysis </a></li>
+    </ul>
+    </nav>
+</div>
+</div>
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <h3 class="page-title">Incident Details</h3>
+            <div class="panel">
+                {% if id %}
+                <div class="panel-heading" style="padding-bottom: 0px">
+                    <h3 class="panel-title"> Event {{ id }} - {{ description }} </h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled todo-list">
+                        <li>
+                            <p><span class="title"> Postive Agent: {{ positive_agent }} </span></p>
+                        </li>
+                        <li>
+                            <p><span class="title"> Passive Agent: {{ passive_agent }} </span></p>
+                        </li>
+                        {% if vehicle %}
+                        <li>
+                            <p><span class="title"> Vehicle: {{ vehicle }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if time %}
+                        <li>
+                            <p><span class="title"> Date: {{ time }} </span></p>
+                        </li>
+                        {% if location %}
+                        <li>
+                            <p><span class="title"> Location: {{ location }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if road_name  %}
+                        <li>
+                            <p><span class="title"> Road Name: {{ road_name }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if road_type %}
+                        <li>
+                            <p><span class="title"> Road Type: {{ road_type }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if road_condition %}
+                        <li>
+                            <p><span class="title"> Road Condition: {{ road_condition }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if speed_limit %}
+                        <li>
+                            <p><span class="title"> Speed Limit: {{ speed_limit }} km/h</span></p>
+                        </li>
+                        {% endif %}
+                        {% if weather %}
+                        <li>
+                            <p><span class="title"> Weather: {{ weather }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if temperature %}
+                        <li>
+                            <p><span class="title"> Temperature: {{ temperature  }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% endif %}
+                        {% if light_condition %}
+                        <li>
+                            <p><span class="title"> Light Condition: {{ light_condition }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if type %}
+                        <li>
+                            <p><span class="title"> Type: {{ type }} </span></p>
+                        </li>
+                        {% endif %}
+                        {% if planned %}
+                        <li>
+                            <p><span class="title"> Planned: <span class="{{ planned_style }}"> {{ planned_text }} </span></span></p>
+                        </li>
+                        {% endif %}
+                        {% if severity %}
+                        <li>
+                            <p><span class="title"> Severity: <span class="{{ severity_style }}"> {{ severity_text }}</span></span></p>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% else %}
+                    <div class="bd-callout bd-callout-danger">
+                        <h4 class="panel-title">Internal error!</h4>
+                        <p><strong>No results</strong> for your search or <strong>invalid option</strong>.</p>
+                        <p>You may input the <strong>eventID</strong> in the search box above.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

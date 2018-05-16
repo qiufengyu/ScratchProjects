@@ -1,0 +1,4 @@
+Django>=2.0.0
+beautifulsoup4>=4.6.0
+python_dateutil>=2.6.1
+pymysql>=0.8.0
