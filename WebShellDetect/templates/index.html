@@ -1,0 +1,129 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+        <title>WebShell Detection</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+                <!-- main css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    </head>
+    <body>
+
+        <!--================Header Menu Area =================-->
+        <header class="header_area">
+            <div class="main_menu" id="mainNav">
+            	<nav class="navbar navbar-expand-lg navbar-light">
+					<div class="container box_1620">
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+							<ul class="nav navbar-nav menu_nav ml-auto">
+								<li class="nav-item active"><a class="nav-link" href="#"> 主页 </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'analysis' %}"> 脚本分析 </a></li>
+								<li class="nav-item"><a class="nav-link" href="{% url 'about' %}"> 关于 </a></li>
+							</ul>
+						</div>
+					</div>
+            	</nav>
+            </div>
+        </header>
+        <!--================Header Menu Area =================-->
+
+        <!--================Feature Area =================-->
+        <section class="feature_area p_120">
+        	<div class="container">
+        		<div class="main_title">
+        			<h2> Web Shell 脚本检测 </h2>
+        			<p>本项目提供 PHP Web Shell 的危害分析，基于朴素贝叶斯、深度神经网络与卷积神经网络三种方法。</p>
+        		</div>
+        		<div class="feature_inner row">
+        			<div class="col-lg-6 col-md-6">
+        				<div class="feature_item">
+        					<h4>线下模型训练：</h4>
+                  <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group form-row">
+                      <div class="col-md-8 mb-4">
+                        <select class="form-control" name="method" required>
+                          <option value="0"> 选择想要训练的模型 </option>
+                          <option value="1" {% if option == 1 %} selected {% endif %}> 朴素贝叶斯（基于词频的特征）</option>
+                          <option value="2" {% if option == 2 %} selected {% endif %}> 深度神经网络（基于 tf-idf 的特征）</option>
+                          <option value="3" {% if option == 3 %} selected {% endif %}> 卷积神经网络 </option>
+                        </select>
+                      </div>
+                      <div class="col-md-4 mb-2">
+                        <button class="btn btn-primary form-control" type="submit" name="action"> 提交 </button>
+                      </div>
+                    </div>
+                  </form>
+                  <p> 注意：朴素贝叶斯方法时间较短；深度神经网络需要几分钟，需要耐心等待一会儿；而卷积神经网络需要几小时，因此是加载训练好的模型展示结果。
+                    需要管理员手动线下训练好模型！</p>
+        				</div>
+        			</div>
+        			<div class="col-lg-6 col-md-6">
+        				<div class="feature_item">
+                  {% if message %}
+                    <p style="color: #e13b33">{{ message }}</p>
+                  {% else %}
+        					<h4>模型测试结果</h4>
+        					<p style="margin-bottom: 2rem"> 综合准确率：{{ accuracy }}%</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">真实 \ 预测</th>
+                        <th scope="col">正常脚本</th>
+                        <th scope="col">危险脚本</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">正常脚本</th>
+                        <td>{{ white_correct }}</td>
+                        <td>{{ white_wrong }}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">危险脚本</th>
+                        <td>{{ black_wrong }}</td>
+                        <td>{{ black_correct }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {% endif %}
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </section>
+        <!--================End Feature Area =================-->
+
+        <!--================Footer Area =================-->
+        <footer class="footer_area p_60">
+        	<div class="container">
+        		<div class="row footer_inner">
+        			<div>
+        				<aside class="f_widget ab_widget">
+        					<div class="f_title">
+        						<h3> 关于本项目 </h3>
+        					</div>
+        					<p> 本项目中的测试训练样本均来源于网络，在项目"关于"页有说明，请勿恶意传播！</p>
+        				</aside>
+        			</div>
+        		</div>
+        	</div>
+        </footer>
+        <!--================End Footer Area =================-->
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/theme.js' %}"></script>
+    </body>
+</html>

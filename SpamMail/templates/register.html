@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+    <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+    <title>注册 | My Mail</title>
+    <!-- Favicons-->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <!-- CORE CSS-->
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+    <!-- Custome CSS-->
+    <link href="{% static 'css/custom.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/page-center.css' %}" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body class="cyan">
+    <div id="register-page" class="row">
+      <div class="col s12 z-depth-4 card-panel">
+        <form class="login-form" action="{% url 'register' %}" method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s12 center">
+              <h4>注册</h4>
+              <p class="center">加入 My Mail！</p>
+            </div>
+          </div>
+          {% if message %}
+            <div class="row margin">
+              <div class="red-text">{{ message }}</div>
+            </div>
+          {% endif %}
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="material-icons prefix pt-5">person_outline</i>
+              <input id="username" type="text" name="username">
+              <label for="username" class="center-align">用户名</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="material-icons prefix pt-5">face</i>
+              <input id="nickname" type="text" name="nickname">
+              <label for="nickname" class="center-align">昵称</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="material-icons prefix pt-5">lock_outline</i>
+              <input id="password1" type="password" name="password1">
+              <label for="password1">密码</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="material-icons prefix pt-5">lock_outline</i>
+              <input id="password2" type="password" name="password2">
+              <label for="password2">重复密码</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button type="submit" class="btn waves-effect waves-light col s12">立即注册</button>
+            </div>
+            <div class="input-field col s12">
+              <p class="margin center medium-small sign-up">已有账号？ <a href="{% url 'login' %}">登陆</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- ================================================
+    Scripts
+    ================================================ -->
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!--materialize js-->
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="{% static 'js/perfect-scrollbar.min.js' %}"></script>
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="{% static 'js/custom-script.js' %}"></script>
+  </body>
+</html>

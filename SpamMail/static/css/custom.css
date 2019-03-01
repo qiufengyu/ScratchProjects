@@ -1,0 +1,46 @@
+/*================================================================================
+	Item Name: Materialize - Material Design Admin Template
+	Version: 4.0
+	Author: PIXINVENT
+	Author URL: https://themeforest.net/user/pixinvent/portfolio
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+.mail-item {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+.mail-item td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Column widths are based on these cells */
+.row-user {
+  width: 10%;
+}
+.row-subject {
+  width: 75%;
+}
+.row-date {
+  width: 10%;
+  text-align: right;
+}
+
+a.chipa {
+  color: #fff;
+}
+
+a.read {
+  color: #888888;
+}
+
+a.unread {
+  color: #8e24aa;
+}

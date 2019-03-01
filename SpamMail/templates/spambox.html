@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+  <aside id="left-sidebar-nav" class="nav-expanded nav-lock nav-collapsible">
+    <div class="brand-sidebar">
+      <h1 class="logo-wrapper">
+        <a href="#" class="brand-logo darken-1">
+          <img src="{% static 'img/materialize-logo.png' %}" alt="materialize logo">
+          <span class="logo-text hide-on-med-and-down">Your Mail</span>
+        </a>
+        <a href="#" class="navbar-toggler">
+          <i class="material-icons">radio_button_checked</i>
+        </a>
+      </h1>
+    </div>
+    <ul id="slide-out" class="side-nav fixed leftside-navigation">
+      <li class="no-padding">
+        <ul class="collapsible" data-collapsible="accordion">
+          <li class="bold">
+            <a href="{% url 'sendmail' %}" class="waves-effect waves-cyan">
+              <i class="material-icons">edit</i>
+              <span class="nav-text"> 写邮件 </span>
+            </a>
+          </li>
+          <li class="bold">
+            <a href="{% url 'index' %}"class="waves-effect waves-cyan">
+              <i class="material-icons">inbox</i>
+              <span class="nav-text"> 收件箱 </span>
+            </a>
+          </li>
+          <li class="bold">
+            <a href="{% url 'outbox' %}" class="waves-effect waves-cyan">
+              <i class="material-icons">send</i>
+              <span class="nav-text"> 已发邮件 </span>
+            </a>
+          </li>
+          <li class="bold active">
+            <a href="{% url 'spambox' %}" class="waves-effect waves-cyan">
+              <i class="material-icons">exposure</i>
+              <span class="nav-text"> 垃圾邮件 </span>
+            </a>
+          </li>
+          <li class="bold">
+            <a href="{% url 'deletebox' %}" class="waves-effect waves-cyan">
+              <i class="material-icons">delete</i>
+              <span class="nav-text"> 已删除 </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="li-hover">
+        <p class="ultra-small margin more-text"> 设置 </p>
+      </li>
+      <li class="bold">
+        <a href="{% url 'config' %}" class="waves-effect waves-cyan">
+          <i class="material-icons">settings</i>
+          <span class="nav-text"> 配置过滤器 </span>
+        </a>
+      </li>
+    </ul>
+    <a href="#" data-activates="slide-out"
+       class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only gradient-45deg-light-blue-cyan gradient-shadow">
+      <i class="material-icons">menu</i>
+    </a>
+  </aside>
+{% endblock %}
+
+{% block content %}
+  <section id="content">
+    <!--start container-->
+    <div class="container">
+      <div id="mail-app" class="section">
+        <div class="row">
+          <div class="col s12">
+            <nav class="red">
+              <div class="nav-wrapper">
+                <div class="left col s12 m5 l5">
+                  <ul>
+                    <li>
+                      <a href="#!" class="email-menu">
+                        <i class="material-icons">menu</i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col s12 m7 l7 hide-on-med-and-down">
+                  <ul class="right pagination">
+                    {% if mails.has_previous %}
+                    <li class="active">
+                      <a href="?page={{ mails.previous_page_number }}">
+                        <i class="material-icons">chevron_left</i>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                      <a href="#">
+                        <i class="material-icons">chevron_left</i>
+                      </a>
+                    </li>
+                    {% endif %}
+                    <li class="current">
+                        {{ mails.number }} / {{ mails.paginator.num_pages }}
+                    </li>
+                    {% if mails.has_next %}
+                    <li class="active">
+                      <a href="?page={{ mails.next_page_number }}">
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                      <a href="#">
+                        <i class="material-icons">chevron_right</i>
+                      </a>
+                    </li>
+                    {% endif %}
+                    <li class="active">
+                      <a class="restore-btn" id="btn-restore">
+                        <i class="material-icons">restore</i>
+                      </a>
+                    </li>
+                    <li class="active">
+                      <a class="delete-btn" id="btn-delete">
+                        <i class="material-icons">delete</i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <div class="col s12">
+            <div id="email-list" class="card-panel z-depth-1">
+              <table class="highlight mail-item">
+                <tbody>
+                <thead>
+                <tr>
+                  <th class="row-user"></th>
+                  <th class="row-subject"></th>
+                  <th class="row-date"></th>
+                </tr>
+                </thead>
+                {% for mail in mails %}
+                  <tr>
+                    <td>
+                      <input type="checkbox" name="mailckb" value="{{ mail.identify }}" id="mail-{{ mail.identify }}" class="filled-in"/>
+                      <label for="mail-{{ mail.identify }}">{{ mail.sender }}</label>
+                    </td>
+                  {% if mail.status == 1 %}
+                    <td><a href="{% url 'mail_id' %}{{ mail.identify }}" class="unread">{{ mail.abstract }}</a></td>
+                  {% else %}
+                    <td><a href="{% url 'mail_id' %}{{ mail.identify }}" class="read">{{ mail.abstract }}</a></td>
+                  {% endif %}
+                  <td>{{ mail.dt }}</td>
+                  </tr>
+                {% empty %}
+                  <div class="empty-form">
+                    <h5 class="center-align" style="padding-top: 1.5rem">您没有收到任何垃圾邮件！</h5>
+                  </div>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end container-->
+  </section>
+{% endblock %}
+
+{% block otherjs %}
+  <script type="text/javascript">
+    const username = "{{ username }}";
+    const csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+    let deletebtn = document.getElementById("btn-delete");
+    deletebtn.onclick = function () {
+      let delete_array = [];
+      let f = 0;
+      $("input:checkbox[name=mailckb]:checked").each(function() {
+        delete_array.push($(this).val());
+      });
+      for(let i = 0; i<delete_array.length; i++) {
+        $.ajax({
+          url: "{% url 'markdelete' %}",
+          type: 'POST',
+          data: {username: username, mid: delete_array[i]},
+          dataType: 'json',
+          async: false,
+          success: function () { f = 1; },
+        });
+      }
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    }
+    let restorebtn = document.getElementById("btn-restore");
+    restorebtn.onclick = function () {
+      let restore_array = [];
+      let f = 0;
+      $("input:checkbox[name=mailckb]:checked").each(function() {
+        restore_array.push($(this).val());
+      });
+      for(let i = 0; i<restore_array.length; i++) {
+        $.ajax({
+          url: "{% url 'restorespam' %}",
+          type: 'POST',
+          data: {username: username, mid: restore_array[i]},
+          dataType: 'json',
+          async: false,
+          success: function () { f = 1; },
+        });
+      }
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    }
+  </script>
+{% endblock %}
+
+
+
+

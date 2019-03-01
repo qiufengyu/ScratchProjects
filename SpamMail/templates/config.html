@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+<aside id="left-sidebar-nav" class="nav-expanded nav-lock nav-collapsible">
+  <div class="brand-sidebar">
+    <h1 class="logo-wrapper">
+      <a href="#" class="brand-logo darken-1">
+        <img src="{% static 'img/materialize-logo.png' %}" alt="materialize logo">
+        <span class="logo-text hide-on-med-and-down">Your Mail</span>
+      </a>
+      <a href="#" class="navbar-toggler">
+        <i class="material-icons">radio_button_checked</i>
+      </a>
+    </h1>
+  </div>
+  <ul id="slide-out" class="side-nav fixed leftside-navigation">
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li class="bold">
+          <a href="{% url 'sendmail' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">edit</i>
+            <span class="nav-text"> 写邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'index' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">inbox</i>
+            <span class="nav-text"> 收件箱 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'outbox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">send</i>
+            <span class="nav-text"> 已发邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'spambox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">exposure</i>
+            <span class="nav-text"> 垃圾邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'deletebox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">delete</i>
+            <span class="nav-text"> 已删除 </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="li-hover">
+      <p class="ultra-small margin more-text"> 设置 </p>
+    </li>
+    <li class="bold active">
+      <a href="#" class="waves-effect waves-cyan">
+        <i class="material-icons">settings</i>
+        <span class="nav-text"> 配置过滤器 </span>
+      </a>
+    </li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only gradient-45deg-light-blue-cyan gradient-shadow">
+    <i class="material-icons">menu</i>
+  </a>
+</aside>
+{% endblock %}
+
+{% block content %}
+<section id="content">
+  <!--start container-->
+  <div class="container">
+    <div id="mail-app" class="section">
+      <div class="row">
+        <div class="col s12">
+          <nav class="red">
+            <div class="nav-wrapper">
+              <div class="left col s12 m5 l5">
+                <ul>
+                  <li>
+                    <a href="#!" class="email-menu">
+                      <i class="material-icons">menu</i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#!" class="email-type"> 配置过滤词典 </a>
+                  </li>
+                </ul>
+              </div>
+              {% if message %}
+              <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                  <li>
+                    <a href="#!">{{ message }}</a>
+                  </li>
+                </ul>
+              </div>
+              {% endif %}
+            </div>
+          </nav>
+        </div>
+        <div class="col s12">
+          <div id="add-dict" class="card-panel z-depth-1">
+            <form action="{% url 'configadd' %}" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="input-field col s10">
+                  <input id="newword" type="text" name="newword">
+                  <label for="newword"> 新词 </label>
+                </div>
+                <div class="input-field col s2">
+                  <button class="btn cyan waves-effect waves-light right" type="submit" name="action"> 添加
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col s12">
+            <h5> 现有过滤词 </h5>
+            {% for w in wordlist %}
+              <div class="chip gradient-45deg-purple-deep-orange white-text">
+                {{ w.word }}
+                <a class="chipa delete-word-btn" id="w{{ w.id }}"><i class="material-icons close">close</i></a>
+              </div>
+            {% empty %}
+              <div class="empty-form">
+                <h5 class="center-align">您没有添加任何过滤词！</h5>
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end container-->
+</section>
+{% endblock %}
+
+{% block otherjs %}
+  <script type="text/javascript">
+    const username = "{{ username }}";
+    const csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+    let chipeles = document.getElementsByClassName("delete-word-btn");
+    for(let i = 0; i<chipeles.length; i++) {
+      chipeles[i].onclick = function () {
+        let currentID = parseInt(chipeles[i].id.substr(1));
+        $.ajax({
+          url: "{% url 'configdelete' %}",
+          type: 'POST',
+          data: {username: username, wid: currentID },
+          dataType: 'json',
+          async: false,
+          success: function(arg) {
+            location.reload();
+          },
+          error: function() { }
+        });
+      }
+    }
+  </script>
+{% endblock %}
+
+
+
+

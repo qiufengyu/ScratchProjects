@@ -1,0 +1,110 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+        <title>剧本创作</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- main css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    </head>
+    <body>
+
+        <!--================Header Menu Area =================-->
+        <header class="header_area">
+            <div class="main_menu" id="mainNav">
+            	<nav class="navbar navbar-expand-lg navbar-light">
+					<div class="container box_1620">
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+							<ul class="nav navbar-nav menu_nav ml-auto">
+								<li class="nav-item active"><a class="nav-link" href="#"> 主页 </a></li>
+								<li class="nav-item"><a class="nav-link" href="{% url 'about' %}"> 关于 </a></li>
+							</ul>
+						</div>
+					</div>
+            	</nav>
+            </div>
+        </header>
+        <!--================Header Menu Area =================-->
+
+        <!--================Feature Area =================-->
+        <section class="feature_area p_120">
+        	<div class="container">
+        		<div class="main_title">
+        			<h2> 剧本创作 </h2>
+        			<p>本项目通过神经网络模型学习部分剧本的创作风格和文字表达方式，根据所给的词进行剧本创作。</p>
+        		</div>
+        		<div class="feature_inner row">
+        			<div class="col-lg-5 col-md-5">
+        				<div class="feature_item">
+                  <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <h4> 剧本主题词 </h4>
+                    <div class="form-group form-row">
+                      <div class="col-md-12 mb-6">
+                        <input class="form-control" name="startstring" value="{% if startstring %} {{ startstring }} {% endif %}">
+                      </div>
+                    </div>
+                  <br />
+                    <h4> 剧本字数 </h4>
+                    <div class="form-group form-row">
+                      <div class="col-md-8 mb-6">
+                        <input class="form-control" name="words" value="{% if words %} {{ words }} {% else %}100{% endif %}">
+                      </div>
+                      <div class="col-md-4 mb-2">
+                        <button class="btn btn-primary form-control" type="submit" name="action"> 提交 </button>
+                      </div>
+                    </div>
+                  </form>
+                  <p> 注意：请确保已有剧本创作模型。通常模型的学习和训练需要 GPU 线下训练 6 小时以上，才能有部分连贯的句子生成，暂不支持在线训练。</p>
+        				</div>
+        			</div>
+        			<div class="col-lg-7 col-md-7">
+        				<div class="feature_item">
+                  {% if message %}
+                    <p style="color: #e13b33">{{ message }}</p>
+                  {% else %}
+        					<h4>剧本创作</h4>
+                    {% for line in res %}
+                      <p style="margin-bottom: 0.5rem"> {{ line }} </p>
+                    {% endfor %}
+                  {% endif %}
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </section>
+        <!--================End Feature Area =================-->
+
+        <!--================Footer Area =================-->
+        <footer class="footer_area p_60">
+        	<div class="container">
+        		<div class="row footer_inner">
+        			<div>
+        				<aside class="f_widget ab_widget">
+        					<div class="f_title">
+        						<h3> 关于本项目 </h3>
+        					</div>
+        					<p> 本项目中的剧本样本均来源于网络，在项目"关于"页有说明，请勿恶意传播！</p>
+        				</aside>
+        			</div>
+        		</div>
+        	</div>
+        </footer>
+        <!--================End Footer Area =================-->
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/theme.js' %}"></script>
+    </body>
+</html>

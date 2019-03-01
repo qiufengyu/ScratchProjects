@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+    <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+    <title>Spam Email System</title>
+    <!-- Favicons-->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <!-- CORE CSS-->
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+    <!-- Custome CSS-->
+    <link href="{% static 'css/custom.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/perfect-scrollbar.css' %}" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body>
+    <!-- START HEADER -->
+    <header id="header" class="page-topbar">
+      <!-- start header nav-->
+      <div class="navbar-fixed">
+        <nav class="navbar-color gradient-45deg-purple-deep-orange gradient-shadow">
+          <div class="nav-wrapper">
+            <ul class="right hide-on-med-and-down">
+              <li>
+                <a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown">
+                  <i class="material-icons">notifications_none
+                    <small class="notification-badge">{{ notify_counts }}</small>
+                  </i>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);" class="waves-effect waves-block waves-light profile-button" data-activates="profile-dropdown">
+                  <span class="avatar-status avatar-online">
+                    <img src="{% static 'img/favicon-32x32.png' %}" alt="avatar">
+                    <i></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <!-- notifications-dropdown -->
+            <ul id="notifications-dropdown" class="dropdown-content">
+              <li>
+                <h6> 通知 </h6>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="{% url 'index' %}" class="grey-text text-darken-2"> 未读邮件：{{ unreads }} </a>
+              </li>
+              <li>
+                <a href="{% url 'spambox' %}" class="grey-text text-darken-2"> 垃圾邮件：{{ spams }} </a>
+              </li>
+            </ul>
+            <!-- profile-dropdown -->
+            <ul id="profile-dropdown" class="dropdown-content">
+              <li>
+                <a href="#" class="grey-text text-darken-1">
+                  <i class="material-icons">face</i> {{ username }} </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="{% url 'logout' %}" class="grey-text text-darken-1">
+                  <i class="material-icons">keyboard_tab</i> 注销登陆 </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- END HEADER -->
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+    <!-- START MAIN -->
+    <div id="main">
+      <!-- START WRAPPER -->
+      <div class="wrapper">
+        <!-- START LEFT SIDEBAR NAV-->
+        {% block sidebar %}
+        {% endblock %}
+        <!-- END LEFT SIDEBAR NAV-->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- START CONTENT -->
+        {% block content %}
+        {% endblock %}
+        <!-- END CONTENT -->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+      </div>
+      <!-- END WRAPPER -->
+    </div>
+    <!-- END MAIN -->
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+    <!-- START FOOTER -->
+    <footer class="page-footer gradient-45deg-purple-deep-orange">
+      <div class="footer-copyright">
+        <div class="container">
+          <span class="right hide-on-small-only">Copyright ©
+            <script type="text/javascript">
+              document.write(new Date().getFullYear());
+            </script> </span>
+        </div>
+      </div>
+    </footer>
+    <!-- END FOOTER -->
+    <!-- ================================================
+    Scripts
+    ================================================ -->
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!--materialize js-->
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/perfect-scrollbar.min.js' %}"></script>
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="{% static 'js/custom-script.js' %}"></script>
+    {% block otherjs %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+<aside id="left-sidebar-nav" class="nav-expanded nav-lock nav-collapsible">
+  <div class="brand-sidebar">
+    <h1 class="logo-wrapper">
+      <a href="#" class="brand-logo darken-1">
+        <img src="{% static 'img/materialize-logo.png' %}" alt="materialize logo">
+        <span class="logo-text hide-on-med-and-down">Your Mail</span>
+      </a>
+      <a href="#" class="navbar-toggler">
+        <i class="material-icons">radio_button_checked</i>
+      </a>
+    </h1>
+  </div>
+  <ul id="slide-out" class="side-nav fixed leftside-navigation">
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li class="bold active">
+          <a href="{% url 'sendmail' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">edit</i>
+            <span class="nav-text"> 写邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'index' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">inbox</i>
+            <span class="nav-text"> 收件箱 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'outbox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">send</i>
+            <span class="nav-text"> 已发邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'spambox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">exposure</i>
+            <span class="nav-text"> 垃圾邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'deletebox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">delete</i>
+            <span class="nav-text"> 已删除 </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="li-hover">
+      <p class="ultra-small margin more-text"> 设置 </p>
+    </li>
+    <li class="bold">
+      <a href="{% url 'config' %}" class="waves-effect waves-cyan">
+        <i class="material-icons">settings</i>
+        <span class="nav-text"> 配置过滤器 </span>
+      </a>
+    </li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only gradient-45deg-light-blue-cyan gradient-shadow">
+    <i class="material-icons">menu</i>
+  </a>
+</aside>
+{% endblock %}
+
+{% block content %}
+<section id="content">
+  <!--start container-->
+  <div class="container">
+    <div id="mail-app" class="section">
+      <div class="row">
+        <div class="col s12">
+          <nav class="red">
+            <div class="nav-wrapper">
+              <div class="left col s12 m5 l5">
+                <ul>
+                  <li>
+                    <a href="#!" class="email-menu">
+                      <i class="material-icons">menu</i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right pagination">
+                  {% if status > 3 %}
+                  <li class="active">
+                    <a class="restore-btn" id="btn-restore">
+                      <i class="material-icons">restore</i>
+                    </a>
+                  </li>
+                  {% else %}
+                  <li class="disabled">
+                    <a class="spam-btn" id="btn-restore">
+                      <i class="material-icons">restore</i>
+                    </a>
+                  </li>
+                  {% endif %}
+                  {% if status == 3 %}
+                  <li class="disabled">
+                    <a class="spam-btn" id="btn-spam">
+                      <i class="material-icons">archive</i>
+                    </a>
+                  </li>
+                  {% else %}
+                    <li class="active">
+                    <a class="spam-btn" id="btn-spam">
+                      <i class="material-icons">archive</i>
+                    </a>
+                  </li>
+                  {% endif %}
+                  <li class="active">
+                    <a class="delete-btn" id="btn-delete">
+                      <i class="material-icons">delete</i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="col s12">
+          <div id="email-details" class="card-panel z-depth-1">
+            <p class="email-subject truncate">{{ subject }} <span class="email-tag grey lighten-3">{{ prefix }}</span></p>
+            <hr class="grey-text text-lighten-2">
+            <div class="email-content-wrap">
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <ul class="collection">
+                    <li class="collection-item">
+                      <p class="email-title">发件人：{{ sender }}</p>
+                      <p class="truncate grey-text ultra-small">收件人：{{ receiver }}</p>
+                      <p class="grey-text ultra-small">{{ dt }}</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <hr class="grey-text text-lighten-2">
+              <div class="email-content">
+                {% for cl in contents %}
+                  <p> {{ cl }} </p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end container-->
+</section>
+{% endblock %}
+
+{% block otherjs %}
+  <script type="text/javascript">
+    const username = "{{ username }}";
+    const csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+    let spambtn = document.getElementById("btn-spam");
+    spambtn.onclick = function () {
+      let f = 0;
+      $.ajax({
+        url: "{% url 'markspam' %}",
+        type: 'POST',
+        data: {username: username, mid: {{ identify }} },
+        dataType: 'json',
+        async: false,
+        success: function (arg) { f = 1; alert("已标记为垃圾邮件！");}
+      });
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    };
+    let deletebtn = document.getElementById("btn-delete");
+    deletebtn.onclick = function () {
+      let f = 0;
+      $.ajax({
+        url: "{% url 'markdeletesendorreceive' %}",
+        type: 'POST',
+        data: {username: username, mid: {{ identify }}, sendorreceive: {{ sendorreceive }} },
+        dataType: 'json',
+        async: false,
+        success: function (arg) { f = 1; alert("已删除！") },
+      });
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    };
+    let restorebtn = document.getElementById("btn-restore");
+    restorebtn.onclick = function () {
+      let f = 0;
+      $.ajax({
+        url: "{% url 'restoredelete' %}",
+        type: 'POST',
+        data: {username: username, mid: {{ identify }} },
+        dataType: 'json',
+        async: false,
+        success: function (arg) { f = 1; alert("已恢复！") },
+      });
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    };
+  </script>
+{% endblock %}
+
+
+

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+<aside id="left-sidebar-nav" class="nav-expanded nav-lock nav-collapsible">
+  <div class="brand-sidebar">
+    <h1 class="logo-wrapper">
+      <a href="#" class="brand-logo darken-1">
+        <img src="{% static 'img/materialize-logo.png' %}" alt="materialize logo">
+        <span class="logo-text hide-on-med-and-down">Your Mail</span>
+      </a>
+      <a href="#" class="navbar-toggler">
+        <i class="material-icons">radio_button_checked</i>
+      </a>
+    </h1>
+  </div>
+  <ul id="slide-out" class="side-nav fixed leftside-navigation">
+    <li class="no-padding">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li class="bold active">
+          <a href="{% url 'sendmail' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">edit</i>
+            <span class="nav-text"> 写邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'index' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">inbox</i>
+            <span class="nav-text"> 收件箱 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'outbox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">send</i>
+            <span class="nav-text"> 已发邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'spambox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">exposure</i>
+            <span class="nav-text"> 垃圾邮件 </span>
+          </a>
+        </li>
+        <li class="bold">
+          <a href="{% url 'deletebox' %}" class="waves-effect waves-cyan">
+            <i class="material-icons">delete</i>
+            <span class="nav-text"> 已删除 </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="li-hover">
+      <p class="ultra-small margin more-text"> 设置 </p>
+    </li>
+    <li class="bold">
+      <a href="{% url 'config' %}" class="waves-effect waves-cyan">
+        <i class="material-icons">settings</i>
+        <span class="nav-text"> 配置过滤器 </span>
+      </a>
+    </li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only gradient-45deg-light-blue-cyan gradient-shadow">
+    <i class="material-icons">menu</i>
+  </a>
+</aside>
+{% endblock %}
+
+{% block content %}
+<section id="content">
+  <!--start container-->
+  <div class="container">
+    <div id="mail-app" class="section">
+      <div class="row">
+        <div class="col s12">
+          <nav class="red">
+            <div class="nav-wrapper">
+              <div class="left col s12 m5 l5">
+                <ul>
+                  <li>
+                    <a href="#!" class="email-menu">
+                      <i class="material-icons">menu</i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#!" class="email-type"> 新邮件 </a>
+                  </li>
+                </ul>
+              </div>
+              {% if message %}
+              <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                  <li>
+                    <a href="#!">{{ message }}</a>
+                  </li>
+                </ul>
+              </div>
+              {% endif %}
+            </div>
+          </nav>
+        </div>
+        <div class="col s12">
+          <div id="write-mail" class="card-panel z-depth-1">
+            <form action="{% url 'sendmail' %}" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="toreceiver" type="text" name="toreceiver">
+                  <label for="toreceiver"> 收件人 </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="subject" type="text" name="subject">
+                  <label for="subject"> 邮件主题 </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="message" class="materialize-textarea" name="message"></textarea>
+                  <label for="message"> 邮件内容 </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <button class="btn cyan waves-effect waves-light right" type="submit" name="action"> 发送
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end container-->
+</section>
+{% endblock %}
+
+
+
+
