@@ -61,5 +61,7 @@ Scrapy 爬虫，SnowNLP 情感分析
 
 RNN（LSTM）文本生成，创作剧本
 
+### 16. [基于 SVM 算法的垃圾邮件过滤系统设计](./SVMSpam)
 
+使用 SVM 模型对邮件分类，SMO 学习算法，PyQt5 简单界面
 
