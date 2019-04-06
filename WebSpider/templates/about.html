@@ -1,0 +1,63 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+        <title>Web Spider</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+                <!-- main css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    </head>
+  <body>
+
+    <!--================Header Menu Area =================-->
+    <header class="header_area">
+        <div class="main_menu" id="mainNav">
+          <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container box_1620">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+          <ul class="nav navbar-nav menu_nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"> 主页 </a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'search' %}"> 内容检索 </a></li>
+            <li class="nav-item active"><a class="nav-link" href="{% url 'about' %}"> 关于 </a></li>
+          </ul>
+        </div>
+      </div>
+          </nav>
+        </div>
+    </header>
+    <!--================Header Menu Area =================-->
+
+    <section class="feature_area p_60">
+      <div class="container">
+        <div class="main_title">
+          <h2> Web Spider 网络爬虫 </h2>
+          <p>本项目通过定向的网络爬虫，从互联网中获取新闻资讯。</p>
+        </div>
+        <div class="feature_inner">
+          <div class="feature_item sample-text-area">
+            <h3 class="text-heading title_color"> 项目说明 </h3>
+            <p class="sample-text">
+              <b> 本项目中的新闻网页内容来自<a href="https://news.sina.com.cn/roll/">新浪滚动新闻</a></b>
+            </p>
+            <p class="sample-text"> 仅作科学研究之用，本项目不具有其中的任何版权，亦不用作任何商业用途。</p>
+            <p class="sample-text"> 对应网页内容的关键词、摘要若原始来源提供，则直接保存；</p>
+            <p class="sample-text"> 否则使用 SnowNLP 工具与 TextRank 算法提取后保存。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+  </body>
+</html>

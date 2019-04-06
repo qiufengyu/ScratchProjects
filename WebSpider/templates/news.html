@@ -1,0 +1,96 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+  <title>Web Spider</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <!-- main css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+<body>
+
+<!--================Header Menu Area =================-->
+<header class="header_area">
+  <div class="main_menu" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container box_1620">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+          <ul class="nav navbar-nav menu_nav ml-auto">
+            <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}"> 主页 </a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'search' %}"> 内容检索 </a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'about' %}"> 关于 </a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+<!--================Header Menu Area =================-->
+
+<!--================Feature Area =================-->
+<section class="feature_area p_60">
+  <div class="container">
+    <div class="main_title">
+      <h2> Web Spider 网络爬虫 </h2>
+      <p>本项目通过定向的网络爬虫，从互联网中获取新闻资讯。</p>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8 align-self-center">
+        {% if item %}
+          <div>
+              <h3><a href="{{ item.url }}" target="_blank">{{ item.title }}</a></h3>
+              <p class="text-muted small"> 时间：{{ item.time }}，点击标题访问新闻来源</p>
+              <p> 关键词：{{ item.keywords }}</p>
+              <div class="alert alert-secondary" role="alert">【摘要】{{ item.summary }}
+              </div>
+          <hr />
+          {% for para in item.content %}
+              <p> {{ para }} </p>
+          {% empty %}
+              <p class="text-warning"> 该新闻没有具体内容，可能是图片数据，请点击标题访问原链接。</p>
+          {% endfor %}
+          </div>
+          {% else %}
+              <p class="text-danger">内部数据库访问错误！</p>
+          {% endif %}
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+</section>
+<!--================End Feature Area =================-->
+
+<!--================Footer Area =================-->
+<footer class="footer_area p_60">
+  <div class="container">
+    <div class="row footer_inner">
+      <div>
+        <aside class="f_widget ab_widget">
+          <div class="f_title">
+            <h3> 关于本项目 </h3>
+          </div>
+          <p> 新闻内容来源于互联网，其所有权不属于本站，在项目"关于"页有详细说明，仅作非赢利性的科学研究之用！</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--================End Footer Area =================-->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://use.fontawesome.com/25a2c71e7d.js"></script>
+<script src="{% static 'js/theme.js' %}"></script>
+</body>
+</html>

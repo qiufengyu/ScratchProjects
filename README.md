@@ -65,3 +65,6 @@ RNN（LSTM）文本生成，创作剧本
 
 使用 SVM 模型对邮件分类，SMO 学习算法，PyQt5 简单界面
 
+### 17.  [基于Python 的网络爬虫](./WebSpider)
+
+HTTP 获取新浪新闻，python 简单多线程，支持关键词检索

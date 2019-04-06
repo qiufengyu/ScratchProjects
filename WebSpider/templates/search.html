@@ -1,0 +1,145 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+        <title>Web Spider</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+                <!-- main css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    </head>
+    <body>
+
+        <!--================Header Menu Area =================-->
+        <header class="header_area">
+            <div class="main_menu" id="mainNav">
+            	<nav class="navbar navbar-expand-lg navbar-light">
+					<div class="container box_1620">
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+							<ul class="nav navbar-nav menu_nav ml-auto">
+								<li class="nav-item"><a class="nav-link" href="{% url 'index' %}"> 主页 </a></li>
+                <li class="nav-item active"><a class="nav-link" href="#"> 内容检索 </a></li>
+								<li class="nav-item"><a class="nav-link" href="{% url 'about' %}"> 关于 </a></li>
+							</ul>
+						</div>
+					</div>
+            	</nav>
+            </div>
+        </header>
+        <!--================Header Menu Area =================-->
+
+        <!--================Feature Area =================-->
+        <section class="feature_area p_60">
+        	<div class="container">
+        		<div class="main_title">
+        			<h2> Web Spider 网络爬虫 </h2>
+              <p>本项目通过定向的网络爬虫，从互联网中获取新闻资讯。</p>
+            </div>
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8">
+                <form action="{% url 'search' %}" method="post">
+                  {% csrf_token %}
+                  <div class="form-group form-row">
+                    <div class="col-md-1">
+                      <label for="statickeywords" class="sr-only">keywords</label>
+                      <input type="text" readonly class="form-control-plaintext" id="statickeywords" value="关键词">
+                    </div>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="inputkeys" id="inputkeys" placeholder="{% if plhd %} {{ plhd }} {% else %} 以空格或逗号分割多个关键词 {% endif %}">
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-primary form-control" type="submit" name="action"> 搜索 </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-2"></div>
+            </div>
+            {% if flag == 1 %}
+            <div class="row p_30">
+              <div class="col-2"></div>
+              <div class="col-8 feature_item">
+                <table class="table table-striped">
+                  <tbody>
+                  {% for item in items %}
+                    <tr>
+                      <td>
+                        <p><a href="/news/{{ item.id }}" target="_blank">{{ item.title }}</a></p>
+                        <p class="text-secondary small"> 时间：{{ item.time }}，关键词：{{ item.keywords }}</p>
+                      </td>
+                    </tr>
+                  {% empty %}
+                    <p class="text-danger" style="margin: 1rem 0" id="">抱歉，没有相关信息！</p>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-2"></div>
+            </div>
+              <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                  <ul class="pagination justify-content-center">
+                    {% if items.has_previous %}
+                      <li class="page-item">
+                         <a class="page-link" href="?page={{ items.previous_page_number }}">
+                        <i class="fa fa-chevron-left"></i> 上一页</a> </li>
+                    {% else %}
+                      <li class="page-item disabled">
+                      <a class="page-link" href="#">
+                        <i class="fa fa-chevron-left"></i> 上一页</a> </li>
+                    {% endif %}
+                    <li class="page-item">
+                      <a class="page-link" href="#"> &nbsp;&nbsp;&nbsp;&nbsp;第 {{ items.number }} 页，
+                        共 {{ items.paginator.num_pages }} 页&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="sr-only">(current)</span></a>
+                    </li>
+                    {% if items.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ items.next_page_number }}">
+                        下一页 <i class="fa fa-chevron-right"></i></a></li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">
+                        下一页 <i class="fa fa-chevron-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+                <div class="col-2"></div>
+              </div>
+            {% endif %}
+        	</div>
+        </section>
+        <!--================End Feature Area =================-->
+
+        <!--================Footer Area =================-->
+        <footer class="footer_area p_60">
+        	<div class="container">
+        		<div class="row footer_inner">
+        			<div>
+        				<aside class="f_widget ab_widget">
+                  <div class="f_title">
+                    <h3> 关于本项目 </h3>
+                  </div>
+                  <p> 新闻内容来源于互联网，其所有权不属于本站，在项目"关于"页有详细说明，仅作非赢利性的科学研究之用！</p>
+                </aside>
+        			</div>
+        		</div>
+        	</div>
+        </footer>
+        <!--================End Footer Area =================-->
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'js/theme.js' %}"></script>
+    </body>
+</html>
