@@ -1,0 +1,853 @@
+/*----------------------------------------
+  Email App
+------------------------------------------*/
+.app-email .content-area
+{
+    width: -webkit-calc(100% - 1px);
+    width:    -moz-calc(100% - 1px);
+    width:         calc(100% - 1px);
+    /* margin-top: 49px;  不需要 search 栏*/
+}
+.app-email .content-area.content-left
+{
+    float: left;
+}
+.app-email .content-area.content-right
+{
+    float: right;
+}
+.app-email .content-area .app-wrapper .app-search
+{
+    position: relative;
+}
+.app-email .content-area .app-wrapper .app-search .search-icon
+{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    color: #bdbdbd;
+}
+.app-email .content-area .app-wrapper .app-search .app-filter
+{
+    max-width: -webkit-calc(100% - 3rem);
+    max-width:    -moz-calc(100% - 3rem);
+    max-width:         calc(100% - 3rem);
+    margin-bottom: .5rem;
+    padding: .2rem;
+    padding-left: 2.75rem;
+
+    border: none;
+    border-radius: .4rem;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2);
+}
+.app-email .content-area .app-wrapper .app-search .app-filter:focus
+{
+    border-bottom: none !important;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2) !important;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2) !important;
+}
+.app-email .content-area .app-wrapper .email-header
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    padding: 1rem 1.5rem 1rem 0;
+
+    border-bottom: 1px solid #e0e0e0;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.app-email .content-area .app-wrapper .email-header .left-icons
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+            justify-content: space-around;
+    -webkit-box-align: baseline;
+    -webkit-align-items: baseline;
+       -moz-box-align: baseline;
+    -ms-flex-align: baseline;
+            align-items: baseline;
+}
+.app-email .content-area .app-wrapper .email-header .left-icons .action-icons
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    width: 160px;
+    margin-left: 1rem;
+
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+            justify-content: space-around;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+.app-email .content-area .app-wrapper .email-header i.material-icons
+{
+    cursor: pointer;
+
+    color: #9e9e9e;
+}
+.app-email .content-area .app-wrapper .email-header .header-checkbox [type='checkbox'] + span:not(.lever):before,
+.app-email .content-area .app-wrapper .email-header .header-checkbox [type='checkbox']:not(.filled-in) + span:not(.lever):after
+{
+    margin-left: 1.5rem;
+
+    opacity: .5;
+    border-radius: 4px !important;
+}
+.app-email .content-area .app-wrapper .delete-task,
+.app-email .content-area .app-wrapper .delete-tasks,
+.app-email .content-area .app-wrapper .sort-task
+{
+    cursor: pointer;
+}
+.app-email .content-area .app-wrapper .collection
+{
+    margin: 0;
+
+    border: 0;
+}
+.app-email .content-area .app-wrapper .collection .collection-item
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    margin: auto 1.35rem;
+    padding-right: 0;
+    padding-left: 0;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content
+{
+    width: 85%;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .list-title-area
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    margin-bottom: .75rem;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .list-title-area .user-media
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+            justify-content: space-around;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .list-title-area .user-media img.avtar
+{
+    width: 38px;
+    height: 38px;
+    margin-right: .75rem;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .list-title
+{
+    font-weight: 700;
+
+    color: #424242;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .list-desc
+{
+    font-size: .9rem;
+    line-height: 1.35rem;
+
+    margin-top: .25rem;
+
+    color: #616161;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .badge
+{
+    font-size: .8rem;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    padding-right: 8px;
+
+    color: #616161;
+    border-radius: 4px;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-content .badge i
+{
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    margin-right: .25rem !important;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .list-date
+{
+    font-size: .8rem;
+
+    color: #616161;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .favorite i.material-icons,
+.app-email .content-area .app-wrapper .collection .collection-item .email-move i.material-icons,
+.app-email .content-area .app-wrapper .collection .collection-item .delete-task i.material-icons,
+.app-email .content-area .app-wrapper .collection .collection-item .email-label i.material-icons,
+.app-email .content-area .app-wrapper .collection .collection-item .attach-file i.material-icons
+{
+    cursor: pointer;
+
+    color: #bdbdbd;
+}
+.app-email .content-area .app-wrapper .collection .collection-item .attach-file i.material-icons
+{
+    font-size: 1.4rem;
+
+    -webkit-transform: rotate(270deg);
+       -moz-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+         -o-transform: rotate(270deg);
+            transform: rotate(270deg);
+}
+.app-email .content-area .app-wrapper .collection .collection-item .email-move i.icon-move
+{
+    margin-top: 15px;
+}
+.app-email .content-area .app-wrapper .collection .collection-item [type='checkbox'] + span:not(.lever):before,
+.app-email .content-area .app-wrapper .collection .collection-item [type='checkbox']:not(.filled-in) + span:not(.lever):after
+{
+    margin-left: 3px;
+
+    opacity: .5;
+    border-radius: 4px !important;
+}
+
+/*================================================================================
+	Item Name: Materialize - Material Design Admin Template
+	Version: 4.0
+	Author: PIXINVENT
+	Author URL: https://themeforest.net/user/pixinvent/portfolio
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+/*----------------------------------------
+    register Page
+------------------------------------------*/
+.register-bg
+{
+    background-image: url('../img/flat-bg.jpg');
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+
+#register-page
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    height: 100vh;
+
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+#register-page .card-panel.border-radius-6.register-card
+{
+    margin-left: 0 !important;
+}
+
+/*----------------------------------------
+    Login Page
+------------------------------------------*/
+.login-bg
+{
+    background-image: url('../img/flat-bg.jpg');
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+
+#login-page
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    height: 100vh;
+
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+#login-page .card-panel.border-radius-6.login-card
+{
+    margin-left: 0 !important;
+}
+
+.app-email .content-area .card-content .email-header .option-icons
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+.app-email .content-area .card-content .email-header .option-icons i
+{
+    cursor: pointer;
+    color: #9e9e9e;
+}
+
+.app-email .content-area .card-content .card-form-panel {
+    padding: 24px;
+}
+
+.app-email .content-area .blacklist a {
+    color: #fff;
+}
+
+
+body.dragging,
+body.dragging *
+{
+    cursor: move !important;
+}
+
+.dragged
+{
+    position: absolute;
+    z-index: 2000;
+
+    opacity: .5;
+}
+
+.modal .modal-footer .btn
+{
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display:    -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display:         inline-flex;
+}
+.modal .modal-footer .btn i.material-icons
+{
+    margin-right: .5rem;
+}
+
+@media (max-width: 900px)
+{
+    .app-email .content-area
+    {
+         /* margin-top: -110px !important; */
+    }
+    .app-email .content-area.content-right,
+    .app-email .content-area.content-left
+    {
+        z-index: 1;
+
+        float: none !important;
+
+        width: 100%;
+    }
+    .sidebar .sidebar-content .sidenav-trigger
+    {
+        top: 87px;
+    }
+}
+
+/*----------------------------------------
+  Email App - Content Page
+------------------------------------------*/
+.app-email-content .content-area
+{
+    width: -webkit-calc(100% - 1px);
+    width:    -moz-calc(100% - 1px);
+    width:         calc(100% - 1px);
+    /* margin-top: 49px; */
+}
+.app-email-content .content-area.content-left
+{
+    float: left;
+}
+.app-email-content .content-area.content-right
+{
+    float: right;
+}
+.app-email-content .content-area .app-wrapper hr
+{
+    margin: .75rem -1rem 1rem;
+
+    border-top: 1px solid lightgrey;
+}
+.app-email-content .content-area .app-wrapper .app-search
+{
+    position: relative;
+}
+.app-email-content .content-area .app-wrapper .app-search .search-icon
+{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    color: #bdbdbd;
+}
+.app-email-content .content-area .app-wrapper .app-search .app-filter
+{
+    max-width: -webkit-calc(100% - 3rem);
+    max-width:    -moz-calc(100% - 3rem);
+    max-width:         calc(100% - 3rem);
+    margin-bottom: .5rem;
+    padding: .2rem;
+    padding-left: 2.75rem;
+
+    border: none;
+    border-radius: .4rem;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2);
+}
+.app-email-content .content-area .app-wrapper .app-search .app-filter:focus
+{
+    border-bottom: none !important;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2) !important;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2) !important;
+}
+.app-email-content .content-area .app-wrapper .email-header
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: baseline;
+    -webkit-align-items: baseline;
+       -moz-box-align: baseline;
+    -ms-flex-align: baseline;
+            align-items: baseline;
+}
+.app-email-content .content-area .app-wrapper .email-header .subject
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+       -moz-box-align: end;
+    -ms-flex-align: end;
+            align-items: flex-end;
+}
+.app-email-content .content-area .app-wrapper .email-header .subject .back-to-mails
+{
+    margin-right: 1rem;
+    margin-top: 2rem;
+}
+.app-email-content .content-area .app-wrapper .email-header .subject .back-to-mails a
+{
+    color: #424242;
+}
+.app-email-content .content-area .app-wrapper .email-header .subject .email-title
+{
+    font-size: 1.5rem;
+    line-height: 1.5;
+
+    margin-top: 1rem;
+}
+.app-email-content .content-area .app-wrapper .email-header .header-action
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    width: 175px;
+
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+            justify-content: space-around;
+}
+.app-email-content .content-area .app-wrapper .email-header .header-action .badge
+{
+    font-size: .75rem;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+    float: left;
+
+    margin-left: 0;
+    padding-right: 8px;
+
+    color: #616161;
+    border-radius: 2px;
+}
+.app-email-content .content-area .app-wrapper .email-header .header-action i
+{
+    cursor: pointer;
+}
+
+.app-email-content .content-area .app-wrapper .email-header .header-action i.material-icons {
+    color: #9e9e9e;
+}
+
+.app-email-content .content-area .app-wrapper .email-content .list-title-area
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    margin-bottom: 2rem;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .user-media
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .user-media img
+{
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .user-media .list-title
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+            flex-direction: column;
+
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+       -moz-box-orient: vertical;
+       -moz-box-direction: normal;
+        -ms-flex-direction: column;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .user-media .list-title .to-person
+{
+    font-size: .85rem;
+
+    color: #757575;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .title-right
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    /* width: 250px; */
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .title-right .mail-time
+{
+    font-size: .75rem;
+
+    letter-spacing: .035rem;
+
+    color: #616161;
+}
+.app-email-content .content-area .app-wrapper .email-content .list-title-area .title-right i
+{
+    cursor: pointer;
+
+    color: #616161;
+}
+.app-email-content .content-area .app-wrapper .email-content .email-desc p
+{
+    margin: 1rem auto;
+}
+.app-email-content .content-area .app-wrapper .email-footer
+{
+    margin: 1rem 0;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-title
+{
+    margin: 1rem 0;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: baseline;
+    -webkit-align-items: baseline;
+       -moz-box-align: baseline;
+    -ms-flex-align: baseline;
+            align-items: baseline;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .attachment-list
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .attachment-list .attachment
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+            flex-direction: column;
+
+    margin-right: 1rem;
+
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+       -moz-box-orient: vertical;
+       -moz-box-direction: normal;
+        -ms-flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .attachment-list .attachment .attached-image
+{
+    max-width: 75px;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .attachment-list .attachment .size
+{
+    font-size: .75rem;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .attachment-list .attachment .links
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    width: 100%;
+    margin-top: .25rem;
+
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .attachment-list .attachment .links a i
+{
+    font-size: 1.35rem;
+
+    color: #9e9e9e;
+}
+.app-email-content .content-area .app-wrapper .email-footer .footer-action .footer-buttons .forward i
+{
+    -webkit-transform: scaleX(-1);
+       -moz-transform: scaleX(-1);
+        -ms-transform: scaleX(-1);
+         -o-transform: scaleX(-1);
+            transform: scaleX(-1);
+    /* standard */
+
+    -webkit-filter: FlipH;
+            filter: FlipH;
+    /* IE 6/7/8 */
+}
+.app-email-content .content-area .app-wrapper .email-footer .reply-box,
+.app-email-content .content-area .app-wrapper .email-footer .forward-box
+{
+    margin-top: 1rem;
+}
+.app-email-content .content-area .app-wrapper .email-footer .reply-box.d-none,
+.app-email-content .content-area .app-wrapper .email-footer .forward-box.d-none
+{
+    display: none;
+}
+
+@media (max-width: 900px)
+{
+    .app-email-content .content-area
+    {
+        /* margin-top: -110px !important; */
+    }
+    .app-email-content .content-area.content-right,
+    .app-email-content .content-area.content-left
+    {
+        z-index: 1;
+
+        float: none !important;
+
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px)
+{
+    .app-email-content .content-area
+    {
+        float: none;
+
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px)
+{
+    .app-email-content .content-area .app-wrapper .email-header
+    {
+        /* display: block; */
+    }
+    .app-email-content .content-area .app-wrapper .email-header .header-action
+    {
+        width: 100%;
+
+        -webkit-box-pack: end;
+        -webkit-justify-content: flex-end;
+           -moz-box-pack: end;
+        -ms-flex-pack: end;
+                justify-content: flex-end;
+    }
+    .app-email-content .content-area .app-wrapper .email-header .header-action span,
+    .app-email-content .content-area .app-wrapper .email-header .header-action div
+    {
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (max-width: 540px)
+{
+    .app-email-content .content-area .app-wrapper .email-footer .footer-action
+    {
+        /* display: block; */
+    }
+    .app-email-content .content-area .app-wrapper .email-footer .footer-action .footer-buttons .btn.reply,
+    .app-email-content .content-area .app-wrapper .email-footer .footer-action .footer-buttons .btn.forward
+    {
+        margin-top: 5px;
+    }
+}

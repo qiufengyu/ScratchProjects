@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description"
+        content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.">
+  <meta name="keywords"
+        content="materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard">
+  <meta name="author" content="ThemeSelect">
+  <title>注册 | My Message</title>
+  <!-- Favicons-->
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+  <!-- CORE CSS-->
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+  <!-- Custome CSS-->
+  <link href="{% static 'css/custom.css' %}" type="text/css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- END: Page Level CSS-->
+</head>
+
+<body
+    class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 1-column register-bg blank-page blank-page"
+    data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
+<div class="row">
+  <div class="col s12">
+    <div class="container">
+      <div id="register-page" class="row">
+        <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 register-card bg-opacity-8">
+          <form class="login-form" action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="input-field col s12">
+                <h5 class="ml-4">注册</h5>
+                <p class="ml-4">加入 My Message！</p>
+              </div>
+            </div>
+            {% if message %}
+            <div class="row margin">
+              <div class="red-text">{{ message }}</div>
+            </div>
+            {% endif %}
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix pt-2">person_outline</i>
+                <input id="username" type="text" name="username">
+                <label for="username" class="center-align">用户名</label>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix pt-2">face</i>
+                <input id="nickname" type="text" name="nickname">
+                <label for="nickname" class="center-align">昵称</label>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix pt-2">lock_outline</i>
+                <input id="password1" type="password" name="password1">
+                <label for="password1">密码</label>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix pt-2">lock_outline</i>
+                <input id="password2" type="password" name="password2">
+                <label for="password2">重复密码</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <button type="submit" class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12">立即注册</button>
+              </div>
+              <div class="input-field col s12">
+                <p class="margin medium-small">已有账号？ <a href="{% url 'login' %}">登陆</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================================================
+Scripts
+================================================ -->
+<!-- jQuery、scrollbar、materialize Library -->
+<script type="text/javascript" src="{% static 'js/vendor.min.js' %}"></script>
+<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+<script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+<!--custom-script.js - Add your own theme custom JS-->
+<script type="text/javascript" src="{% static 'js/custom-script.js' %}"></script>
+</body>
+</html>

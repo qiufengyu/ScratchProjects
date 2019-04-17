@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="description"
+        content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+  <meta name="keywords"
+        content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+  <title>Spam Message System</title>
+  <!-- Favicons-->
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+  <!-- CORE CSS-->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/vendor.min.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/app-sidebar.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/app-email.css' %}">
+  <!-- Custome CSS-->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="ertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu 2-columns app-page"
+      data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
+<!-- BEGIN: Header-->
+<header class="page-topbar" id="header">
+  <div class="navbar navbar-fixed">
+    <nav
+        class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark gradient-45deg-indigo-purple no-shadow">
+      <div class="nav-wrapper">
+        <ul class="navbar-list right">
+          <li>
+            <a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);"
+               data-target="notifications-dropdown">
+              <i class="material-icons">notifications_none
+                <small class="notification-badge">{{ notify_counts }}</small>
+              </i>
+            </a>
+          </li>
+          <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);"
+                 data-target="profile-dropdown">
+                <span class="avatar-status avatar-online">
+                <img src="{% static 'img/favicon-32x32.png' %}" alt="avatar">
+                </span></a>
+          </li>
+        </ul>
+        <!-- notifications-dropdown-->
+        <ul class="dropdown-content" id="notifications-dropdown">
+          <li>
+            <h6> 通知 </h6>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="{% url 'index' %}" class="grey-text text-darken-2"> 未读信息：{{ unreads }} </a>
+          </li>
+          <li>
+            <a href="{% url 'spambox' %}" class="grey-text text-darken-2"> 垃圾信息：{{ spams }} </a>
+          </li>
+        </ul>
+        <!-- profile-dropdown-->
+        <ul class="dropdown-content" id="profile-dropdown">
+          <li>
+            <a href="#" class="grey-text text-darken-1">
+              <i class="material-icons">face</i> {{ username }} </a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="{% url 'logout' %}" class="grey-text text-darken-1">
+              <i class="material-icons">keyboard_tab</i> 注销登陆 </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- END: Header-->
+<!-- BEGIN: SideNav-->
+{% block sidenav %}
+{% endblock %}
+<!-- END: SideNav-->
+
+<!-- BEGIN: Page Main-->
+<div id="main">
+  <div class="row">
+    <div class="content-wrapper-before gradient-45deg-indigo-purple"></div>
+    <div class="col s12">
+      <div class="container">
+          <div class="sidebar">
+            <div class="sidebar-content">
+              <div class="sidebar-header">
+                <div class="sidebar-details">
+                  {% block pagetitle %}
+                  <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">mail_outline</i>
+                    SpamMessage - 贝叶斯短信过滤系统</h5>
+                  {% endblock %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Content Area Starts -->
+          {% block content %}
+          {% endblock %}
+          <!-- //////////////////////////////////////////////////////////////////////////// -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- //////////////////////////////////////////////////////////////////////////// -->
+  <!-- BEGIN: Footer-->
+
+  <footer
+      class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
+    <div class="footer-copyright">
+      <div class="container"><span>&copy; <script type="text/javascript">
+              document.write(new Date().getFullYear());
+            </script> </span> All rights reserved.</span><span class="right hide-on-small-only">Theme Design and Developed by <a
+          href="https://pixinvent.com/">PIXINVENT</a></span></div>
+    </div>
+  </footer>
+
+  <!-- END: Footer-->
+
+  <!-- ================================================
+  Scripts
+  ================================================ -->
+  <script type="text/javascript" src="{% static 'js/vendor.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/customizer.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/app-email.js' %}"></script>
+
+  <!--custom-script.js - Add your own theme custom JS-->
+  <script type="text/javascript" src="{% static 'js/custom-script.js' %}"></script>
+  {% block otherjs %}
+  {% endblock %}
+</body>
+</html>

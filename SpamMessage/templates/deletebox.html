@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidenav %}
+  <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
+    <div class="brand-sidebar">
+      <h1 class="logo-wrapper">
+        <a class="brand-logo darken-1" href="#">
+          <img
+              src="{% static 'img/materialize-logo-color.png' %}" alt="materialize logo"/>
+          <span class="logo-text hide-on-med-and-down">Message</span> </a>
+
+      </h1>
+    </div>
+    <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out"
+        data-menu="menu-navigation" data-collapsible="menu-accordion">
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'sendmessage' %}">
+          <i class="material-icons">edit</i>
+          <span class="menu-title" data-i18n=""> 新建短信 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'index' %}">
+          <i class="material-icons">inbox</i><span
+            class="menu-title" data-i18n=""> 收件箱 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'outbox' %}">
+          <i class="material-icons">send</i>
+          <span class="menu-title" data-i18n=""> 已发信息 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'spambox' %}">
+          <i class="material-icons">info_outline</i>
+          <span class="menu-title" data-i18n=""> 垃圾信息 </span> </a>
+      </li>
+      <li class="bold active">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'deletebox' %}">
+          <i class="material-icons">delete</i>
+          <span class="menu-title" data-i18n=""> 已删除 </span> </a>
+      </li>
+
+      <li class="navigation-header">
+        <a class="navigation-header-text">设置</a>
+        <i class="navigation-header-icon material-icons">more_horiz</i>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'config' %}">
+          <i class="material-icons">settings</i>
+          <span class="menu-title" data-i18n=""> 设置黑名单 </span> </a>
+      </li>
+    </ul>
+    <div class="navigation-background"></div>
+    <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
+
+  </aside>
+  <!-- END: SideNav-->
+{% endblock %}
+
+{% block pagetitle %}
+<h5 class="m-0 sidebar-title">
+  <i class="material-icons app-header-icon text-top">mail_outline</i>
+   SpamMessage - 已删除信息</h5>
+{% endblock %}
+
+{% block content %}
+  <div class="app-email">
+  <div class="content-area">
+    <div class="app-wrapper">
+      <div class="card card card-default scrollspy border-radius-6 fixed-width">
+        <div class="card-content p-0">
+          <div class="email-header">
+            <div class="left-icons">
+              <span class="header-checkbox">
+              <label>
+                  <input type="checkbox" onclick="toggle(this)">
+                  <span></span>
+                </label>
+              </span>
+              <ul class="pagination action-icons">
+                <li><span>
+                  <i class="material-icons read-btn" id="btn-read" title="已读">check_box</i>
+                </span></li>
+                <li><span>
+                    <i class="material-icons restore-btn" id="btn-restore" title="恢复">restore</i>
+                </span></li>
+                <li><span>
+                    <i class="material-icons delete-btn" id="btn-delete" title="永久删除">delete</i>
+                </span></li>
+              </ul>
+            </div>
+            <div class="list-content"></div>
+            <div class="option-icons">
+              <ul class="pagination">
+                {% if messages.has_previous %}
+                  <li class="waves-effect">
+                    <a href="?page={{ messages.previous_page_number }}">
+                      <i class="material-icons ">chevron_left</i>
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="disabled">
+                    <a href="#!">
+                      <i class="material-icons">chevron_left</i>
+                    </a>
+                  </li>
+                {% endif %}
+                <li class="current">
+                  {{ messages.number }} / {{ messages.paginator.num_pages }}
+                </li>
+                {% if messages.has_next %}
+                  <li class="waves-effect">
+                    <a href="?page={{ messages.next_page_number }}">
+                      <i class="material-icons">chevron_right</i>
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="disabled">
+                    <a href="#!">
+                      <i class="material-icons">chevron_right</i>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+          <div class="collection email-collection">
+            {% for message in messages %}
+              <a href="{% url 'message_id' %}{{ message.identify }}" class="collection-item animate fadeUp delay-1">
+              <div class="list-left">
+                <label>
+                  <input type="checkbox" name="messageckb" value="{{ message.identify }}" id="message-{{ message.identify }}" />
+                  <span></span>
+                </label>
+              </div>
+              <div class="list-content">
+                <div class="list-title-area">
+                  {% if message.status == 6 %}
+                    <div class="user-media">
+                      <div class="list-title">{{ message.receiver }}</div>
+                    </div>
+                  {% else %}
+                    <div class="user-media">
+                      <div class="list-title">{{ message.sender }}</div>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="list-desc">{{ message.abstract }}</div>
+              </div>
+              <div class="list-right">
+                <div class="list-date"> {{ message.dt }} </div>
+              </div>
+              </a>
+            {% empty %}
+              <div class="empty-form">
+                <h5 class="center-align">您没有已删除消息！</h5>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block otherjs %}
+  <script type="text/javascript">
+    const username = "{{ username }}";
+    const csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+    let deletebtn = document.getElementById("btn-delete");
+    deletebtn.onclick = function () {
+      let delete_array = [];
+      $("input:checkbox[name=messageckb]:checked").each(function() {
+        delete_array.push($(this).val());
+        $(this).closest(".collection-item").remove();
+      });
+      for(let i = 0; i<delete_array.length; i++) {
+        $.ajax({
+          url: "{% url 'deleteforever' %}",
+          type: 'POST',
+          data: {username: username, mid: delete_array[i]},
+          dataType: 'json',
+          async: false,
+          success: function () {},
+        });
+      }
+    }
+    let restorebtn = document.getElementById("btn-restore");
+    restorebtn.onclick = function () {
+      let restore_array = [];
+      $("input:checkbox[name=messageckb]:checked").each(function() {
+        restore_array.push($(this).val());
+        $(this).closest(".collection-item").remove();
+      });
+      for(let i = 0; i<restore_array.length; i++) {
+        $.ajax({
+          url: "{% url 'restoredelete' %}",
+          type: 'POST',
+          data: {username: username, mid: restore_array[i]},
+          dataType: 'json',
+          async: false,
+          success: function () {},
+        });
+      }
+    }
+  </script>
+{% endblock %}
+
+
+
+

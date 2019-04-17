@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidenav %}
+  <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
+    <div class="brand-sidebar">
+      <h1 class="logo-wrapper">
+        <a class="brand-logo darken-1" href="#">
+          <img
+              src="{% static 'img/materialize-logo-color.png' %}" alt="materialize logo"/>
+          <span class="logo-text hide-on-med-and-down">Message</span> </a>
+          <a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a>
+      </h1>
+    </div>
+    <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out"
+        data-menu="menu-navigation" data-collapsible="menu-accordion">
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'sendmessage' %}">
+          <i class="material-icons">edit</i>
+          <span class="menu-title" data-i18n=""> 新建短信 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'index' %}">
+          <i class="material-icons">inbox</i><span
+            class="menu-title" data-i18n=""> 收件箱 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'outbox' %}">
+          <i class="material-icons">send</i>
+          <span class="menu-title" data-i18n=""> 已发信息 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'spambox' %}">
+          <i class="material-icons">info_outline</i>
+          <span class="menu-title" data-i18n=""> 垃圾信息 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'deletebox' %}">
+          <i class="material-icons">delete</i>
+          <span class="menu-title" data-i18n=""> 已删除 </span> </a>
+      </li>
+
+      <li class="navigation-header">
+        <a class="navigation-header-text">设置</a>
+        <i class="navigation-header-icon material-icons">more_horiz</i>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'config' %}">
+          <i class="material-icons">settings</i>
+          <span class="menu-title" data-i18n=""> 设置黑名单 </span> </a>
+      </li>
+    </ul>
+  <div class="navigation-background"></div>
+    <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
+  </aside>
+  <!-- END: SideNav-->
+{% endblock %}
+
+{% block pagetitle %}
+<h5 class="m-0 sidebar-title">
+  <i class="material-icons app-header-icon text-top">mail_outline</i>
+   SpamMessage - 信息详情</h5>
+{% endblock %}
+
+{% block content %}
+  <div class="app-email-content">
+  <div class="content-area">
+    <div class="app-wrapper">
+      <div class="app-search"></div>
+      <div class="card card-default scrollspy border-radius-6 fixed-width">
+        <div class="card-content pt-0">
+          <div class="row">
+            <div class="col s12">
+              <!-- Email Header -->
+              <div class="email-header">
+                <div class="subject">
+                  <div class="back-to-mails">
+                    {% if status < 3 %}
+                      <a href="{% url 'index' %}"><i class="material-icons">arrow_back</i></a>
+                    {% elif status == 3 %}
+                      <a href="{% url 'outbox' %}"><i class="material-icons">arrow_back</i></a>
+                    {% elif status == 4 %}
+                      <a href="{% url 'spambox' %}"><i class="material-icons">arrow_back</i></a>
+                    {% else %}
+                      <a href="{% url 'deletebox' %}"><i class="material-icons">arrow_back</i></a>
+                    {% endif %}
+                  </div>
+                  <div class="email-title">{{ prefix }}</div>
+                </div>
+                <div class="header-action">
+                  <div class="restore-icon">
+                  {% if status > 3 %}
+                    <a class="restore-btn" id="btn-restore">
+                      <i class="material-icons">restore</i>
+                    </a>
+                  {% endif %}
+                  </div>
+                  <div class="spam-icon">
+                    {% if status != 3 %}
+                      <a class="spam-btn" id="btn-spam">
+                        <i class="material-icons">info_outline</i>
+                      </a>
+                    {% endif %}
+                  </div>
+                  <div class="delete-icon">
+                    <a class="delete-btn" id="btn-delete">
+                      <i class="material-icons">delete</i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- Email Header Ends -->
+              <hr>
+              <!-- Email Content -->
+              <div class="email-content">
+                <div class="list-title-area">
+                  <div class="user-media">
+                    <div class="list-title">
+                      <span class="name">发信人：{{ sender }}</span>
+                      <span class="to-person">收信人：{{ receiver }}</span>
+                    </div>
+                  </div>
+                  <div class="title-right">
+                    <span class="mail-time">{{ dt }}</span>
+                  </div>
+                </div>
+                <div class="email-desc">
+                  <p>{{ subject }}</p>
+                </div>
+              </div>
+              <!-- Email Content Ends -->
+              <hr>
+              <!-- Email Footer -->
+              <div class="email-footer"> </div>
+              <!-- Email Footer Ends -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block otherjs %}
+  <script type="text/javascript">
+    const username = "{{ username }}";
+    const csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+    let spambtn = document.getElementById("btn-spam");
+    spambtn.onclick = function () {
+      let f = 0;
+      $.ajax({
+        url: "{% url 'markspam' %}",
+        type: 'POST',
+        data: {username: username, mid: {{ identify }} },
+        dataType: 'json',
+        async: false,
+        success: function (arg) { f = 1; alert("已标记为垃圾信息！");}
+      });
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    };
+    let deletebtn = document.getElementById("btn-delete");
+    deletebtn.onclick = function () {
+      let f = 0;
+      $.ajax({
+        url: "{% url 'markdeletesendorreceive' %}",
+        type: 'POST',
+        data: {username: username, mid: {{ identify }}, sendorreceive: {{ sendorreceive }} },
+        dataType: 'json',
+        async: false,
+        success: function (arg) { f = 1; alert("已删除！") },
+      });
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    };
+    let restorebtn = document.getElementById("btn-restore");
+    restorebtn.onclick = function () {
+      let f = 0;
+      $.ajax({
+        url: "{% url 'restoredelete' %}",
+        type: 'POST',
+        data: {username: username, mid: {{ identify }} },
+        dataType: 'json',
+        async: false,
+        success: function (arg) { f = 1; alert("已恢复！") },
+      });
+      if(f === 1) {
+        // console.log(f);
+        location.reload();
+      }
+    };
+  </script>
+{% endblock %}
+
+
+

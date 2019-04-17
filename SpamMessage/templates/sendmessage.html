@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidenav %}
+  <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
+    <div class="brand-sidebar">
+      <h1 class="logo-wrapper">
+        <a class="brand-logo darken-1" href="#">
+          <img
+              src="{% static 'img/materialize-logo-color.png' %}" alt="materialize logo"/>
+          <span class="logo-text hide-on-med-and-down">Message</span> </a>
+
+      </h1>
+    </div>
+    <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out"
+        data-menu="menu-navigation" data-collapsible="menu-accordion">
+      <li class="bold active">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'sendmessage' %}">
+          <i class="material-icons">edit</i>
+          <span class="menu-title" data-i18n=""> 新建短信 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'index' %}">
+          <i class="material-icons">inbox</i><span
+            class="menu-title" data-i18n=""> 收件箱 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'outbox' %}">
+          <i class="material-icons">send</i>
+          <span class="menu-title" data-i18n=""> 已发信息 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'spambox' %}">
+          <i class="material-icons">info_outline</i>
+          <span class="menu-title" data-i18n=""> 垃圾信息 </span> </a>
+      </li>
+      <li class="bold ">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'deletebox' %}">
+          <i class="material-icons">delete</i>
+          <span class="menu-title" data-i18n=""> 已删除 </span> </a>
+      </li>
+
+      <li class="navigation-header">
+        <a class="navigation-header-text">设置</a>
+        <i class="navigation-header-icon material-icons">more_horiz</i>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'config' %}">
+          <i class="material-icons">settings</i>
+          <span class="menu-title" data-i18n=""> 设置黑名单 </span> </a>
+      </li>
+    </ul>
+    <div class="navigation-background"></div>
+    <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
+       href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
+  </aside>
+  <!-- END: SideNav-->
+{% endblock %}
+
+{% block pagetitle %}
+<h5 class="m-0 sidebar-title">
+  <i class="material-icons app-header-icon text-top">mail_outline</i>
+   SpamMessage - 新建信息</h5>
+{% endblock %}
+
+{% block content %}
+  <div class="app-email">
+    <div class="content-area">
+      <div class="app-wrapper">
+        <div class="card card-default scrollspy border-radius-6 fixed-width">
+          <div class="card-content card-form-panel">
+            <form action="{% url 'sendmessage' %}" method="post">
+              {% csrf_token %}
+              <h4 class="card-title"> 发送短信 </h4>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="toreceiver" type="text" name="toreceiver">
+                  <label for="toreceiver"> 收件人 </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="subject" class="materialize-textarea" name="subject"></textarea>
+                  <label for="subject"> 内容 </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s8">
+                  {% if message %}
+                    <p class="form-info" style="margin-bottom: 1rem; margin-top: 1rem">{{ message }}</p>
+                  {% endif %}
+                    </div>
+                <div class="input-field col s4">
+                  <button class="waves-effect waves-light btn right" type="submit" name="action"> 发送
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+

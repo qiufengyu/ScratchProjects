@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidenav %}
+  <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
+    <div class="brand-sidebar">
+      <h1 class="logo-wrapper">
+        <a class="brand-logo darken-1" href="#">
+          <img
+              src="{% static 'img/materialize-logo-color.png' %}" alt="materialize logo"/>
+          <span class="logo-text hide-on-med-and-down">Message</span> </a>
+      </h1>
+    </div>
+    <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out"
+        data-menu="menu-navigation" data-collapsible="menu-accordion">
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'sendmessage' %}">
+          <i class="material-icons">edit</i>
+          <span class="menu-title" data-i18n=""> 新建短信 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'index' %}">
+          <i class="material-icons">inbox</i><span
+            class="menu-title" data-i18n=""> 收件箱 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'outbox' %}">
+          <i class="material-icons">send</i>
+          <span class="menu-title" data-i18n=""> 已发信息 </span> </a>
+      </li>
+      <li class="bold">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'spambox' %}">
+          <i class="material-icons">info_outline</i>
+          <span class="menu-title" data-i18n=""> 垃圾信息 </span> </a>
+      </li>
+      <li class="bold ">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'deletebox' %}">
+          <i class="material-icons">delete</i>
+          <span class="menu-title" data-i18n=""> 已删除 </span> </a>
+      </li>
+
+      <li class="navigation-header">
+        <a class="navigation-header-text">设置</a>
+        <i class="navigation-header-icon material-icons">more_horiz</i>
+      </li>
+      <li class="bold active">
+        <a class="collapsible-header waves-effect waves-cyan" href="{% url 'config' %}">
+          <i class="material-icons">settings</i>
+          <span class="menu-title" data-i18n=""> 设置黑名单 </span> </a>
+      </li>
+    </ul>
+    <div class="navigation-background"></div>
+    <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
+  </aside>
+  <!-- END: SideNav-->
+{% endblock %}
+
+{% block pagetitle %}
+<h5 class="m-0 sidebar-title">
+  <i class="material-icons app-header-icon text-top">mail_outline</i>
+   SpamMessage - 黑名单配置</h5>
+{% endblock %}
+
+{% block content %}
+  <div class="app-email">
+    <div class="content-area">
+      <div class="app-wrapper">
+        <div class="card card-default scrollspy border-radius-6 fixed-width">
+          <div class="card-content card-form-panel">
+            <form action="{% url 'configadd' %}" method="post">
+              {% csrf_token %}
+              <h4 class="card-title"> 添加黑名单 </h4>
+              <div class="row">
+                <div class="input-field col s10">
+                  <input id="newword" type="text" name="newword">
+                  <label for="newword"> 用户名 </label>
+                </div>
+                <div class="input-field col s2">
+                  <button class="waves-effect waves-light btn right" type="submit" name="action"> 添加
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="blacklist col s12">
+          <h5> 现有黑名单 </h5>
+          {% for w in wordlist %}
+            <div class="chip gradient-45deg-purple-deep-orange white-text">
+              {{ w.word }}
+              <a class="chip-label delete-word-btn" id="w{{ w.id }}"><i class="material-icons close">close</i></a>
+            </div>
+          {% empty %}
+            <div class="empty-form">
+              <h5 class="center-align">您没有添加黑名单用户！</h5>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block otherjs %}
+  <script type="text/javascript">
+    const username = "{{ username }}";
+    const csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+    let chipeles = document.getElementsByClassName("delete-word-btn");
+    for(let i = 0; i<chipeles.length; i++) {
+      chipeles[i].onclick = function () {
+        let currentID = parseInt(chipeles[i].id.substr(1));
+        $.ajax({
+          url: "{% url 'configdelete' %}",
+          type: 'POST',
+          data: {username: username, wid: currentID },
+          dataType: 'json',
+          async: false,
+          success: function(arg) {
+            chipeles[i].closest("chip").remove();
+          },
+          error: function() { }
+        });
+      }
+    }
+  </script>
+{% endblock %}
+
+
+
+
