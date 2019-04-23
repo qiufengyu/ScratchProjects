@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" th:href="@{/img/favicon.png}" type="image/png">
+    <title>网络日志 Hadoop 分析</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- main css -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+
+<!--================Header Menu Area =================-->
+<header class="header_area">
+    <div class="main_menu" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container box_1620">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        <li class="nav-item active"><a class="nav-link" th:href="@{/index}"> 网站访问分析 </a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/trans}"> Web 事件分析 </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<!--================Header Menu Area =================-->
+
+<!--================Feature Area =================-->
+<section class="feature_area p_120">
+    <div class="container">
+        <div class="main_title">
+            <h2> Web 事件分析 </h2>
+            <p> 分析日志中的各种类型事件，查询执行对应事件次数最多的前 10 名用户 IP</p>
+        </div>
+        <div class="feature_inner row">
+            <div class="col-lg-6 col-md-6">
+                <div class="feature_item">
+                    <form th:action="@{/trans}" method="post">
+                        <h4> 查询事件 </h4>
+                        <div class="form-group form-row">
+                            <div class="col-md-8 mb-6">
+                                <input class="form-control" name="transstring" th:placeholder="${transInput}">
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-primary form-control" type="submit" name="action"> 提交 </button>
+                            </div>
+                        </div>
+                    </form>
+                    <p> 注意：请选择右侧所示的事件，否则提示对应记录不存在，默认显示最多 10 名记录。</p>
+                    <br />
+                    <div class="chart" th:if="${tableTitle}">
+                        <div id="trans-chart" style="height:320px;"></div>
+                    </div>
+                    <div class="chart-message" th:if="${invalidTrans}">
+                        <p style="color: #e13b33"> 对应的事件不存在，请检查输入！</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="feature_item">
+                    <h4> 事件处理排名 </h4>
+                    <div class="table-scroll table-responsive" id="trans-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="col1"> 排名 </th>
+                                <th scope="col" class="col2"> 事件类型 </th>
+                                <th scope="col" class="col3"> 处理次数 </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item: ${transCountList}">
+                                <td th:text="${itemStat.index}+1" scope="row" class="col1"></td>
+                                <td th:text="${item.trans}" class="col2"></td>
+                                <td th:text="${item.count}" class="col3"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Feature Area =================-->
+
+<!--================Footer Area =================-->
+<footer class="footer_area p_60">
+    <div class="container">
+        <div class="row footer_inner">
+            <div>
+                <aside class="f_widget ab_widget">
+                    <div class="f_title">
+                        <h3> 关于本项目 </h3>
+                    </div>
+                    <p> 本项目使用 Hadoop 分析网络日志，得出统计数据。</p>
+                </aside>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--================End Footer Area =================-->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/js/theme.js}"></script>
+<script th:inline="javascript">
+    new PerfectScrollbar("#trans-table tbody")
+</script>
+<script th:src="@{/js/echarts.common.min.js}"></script>
+<script th:inline="javascript">
+    /* 绘制直方图 */
+    // 从数据中提取内容
+    var raw_data = [[${transIPCountList}]];
+    var xlabel = raw_data.map(function(a) {return a.ip;});
+    var ylabel = raw_data.map(function(a) {return a.count;});
+
+    // 基于准备好的 dom，初始化 echarts 实例
+    var myChart = echarts.init(document.getElementById('trans-chart'));
+    option = {
+        title : {
+            text: [[${tableTitle}]],
+            x: 'center'
+        },
+        tooltip : {
+            trigger: 'item'
+        },
+        xAxis: {
+            type: 'category',
+            data: xlabel
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: ylabel,
+            type: 'bar',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'inside'
+                }
+            }
+        }]
+    };
+    myChart.setOption(option);
+</script>
+</body>
+</html>

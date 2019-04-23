@@ -1,0 +1,102 @@
+.feature_panel {
+    padding: 50px 35px;
+    border-radius: 10px;
+    transition: all 300ms linear 0s;
+    background: #fff;
+    margin-bottom: 30px;
+}
+
+.feature_panel i {
+    margin-bottom: 35px;
+}
+
+.feature_panel i:before {
+    margin-left: 0px;
+    font-size: 60px;
+    color: #e1e1e1;
+    line-height: 60px;
+}
+
+.feature_panel h4 {
+    color: #222222;
+    font-size: 21px;
+    font-family: "Heebo", sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.feature_panel p {
+    margin-bottom: 0px;
+}
+
+.feature_panel .main_btn {
+    padding: 0px 30px;
+    line-height: 38px;
+}
+
+.feature_panel:hover {
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.08);
+    border-color: #fff;
+}
+
+.feature_panel:hover i:before {
+    background: linear-gradient(to right, #8490ff 0%, #62bdfc 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.table-scroll thead, .table-scroll tbody, .table-scroll tr {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-scroll tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    max-height: 500px;
+}
+
+.table-scroll tbody tr .col1 {
+    display: block;
+    float: left;
+    width: 15%;
+    text-align: center;
+}
+
+.table-scroll thead tr .col1 {
+    display: block;
+    float: left;
+    width: 15%;
+    text-align: center;
+}
+
+.table-scroll tbody tr .col2 {
+    display: block;
+    float: left;
+    width: 60%;
+    text-align: left;
+}
+.table-scroll thead tr .col2 {
+    display: block;
+    float: left;
+    width: 60%;
+    text-align: left;
+}
+.table-scroll tbody tr .col3 {
+    display: block;
+    float: left;
+    width: 20%;
+    text-align: right;
+}
+
+.table-scroll thead tr .col3 {
+    display: block;
+    float: left;
+    width: 20%;
+    text-align: right;
+}
+
+
