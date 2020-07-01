@@ -72,7 +72,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>6.0.6</version>
+      <version>8.0.16</version>
     </dependency>
 
     <!-- 新闻分析与检索相关的库 -->
